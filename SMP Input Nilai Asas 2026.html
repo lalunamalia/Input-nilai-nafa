@@ -1439,17 +1439,25 @@
 
       function dataRowsUntukDatabase(kelas, mapel, korektor) {
         const guru = pengampu(mapel, kelas);
-        return dataKelasUntukCetak(kelas, mapel, korektor).map((r) => ({
-          jenjang: "SMP",
-          kelas,
-          namaSiswa: r.nama,
-          mapel,
-          skorUmum: r.umum ?? "",
-          cekPremis: r.premis ?? "",
-          nilaiAkhir: r.akhir ?? "0",
-          korektor,
-          guruPengampu: guru,
-        }));
+
+        return dataKelasUntukCetak(kelas, mapel, korektor)
+          .map((r, index) => ({
+            no: index + 1,
+            jenjang: "SMP",
+            kelas,
+            namaSiswa: r.nama,
+            mapel,
+            skorUmum: r.umum ?? "",
+            cekPremis: r.premis ?? "",
+            nilaiAkhir: r.akhir ?? "",
+            korektor,
+            guruPengampu: guru,
+          }))
+          .filter((r) => {
+            const skorUmumTerisi = String(r.skorUmum ?? "").trim() !== "";
+            const cekPremisTerisi = String(r.cekPremis ?? "").trim() !== "";
+            return skorUmumTerisi || cekPremisTerisi;
+          });
       }
 
       async function buatBufferExcel(korektor, selected) {
@@ -1572,6 +1580,11 @@
           localStorage.setItem(key(), JSON.stringify(ambilDataInput()));
           const fileNameBase = namaFileDasar(mapel, kelas, korektor);
           const buffer = await buatBufferExcel(korektor, [`${mapel}|${kelas}`]);
+          const rows = dataRowsUntukDatabase(kelas, mapel, korektor);
+          if (!rows.length) {
+            return alert("Belum ada nilai yang terisi. Isi minimal 1 siswa sebelum kirim data.");
+          }
+
           const payload = {
             action: "kirimNilaiSmp",
             jenjang: "SMP",
@@ -1581,7 +1594,7 @@
             guruPengampu: pengampu(mapel, kelas),
             fileNameBase,
             excelBase64: arrayBufferToBase64(buffer),
-            rows: dataRowsUntukDatabase(kelas, mapel, korektor),
+            rows,
           };
 
           await fetch(GAS_WEB_APP_URL, {
@@ -1590,7 +1603,7 @@
             headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify(payload),
           });
-          alert(`Data dikirim. Cek folder Drive ${namaMapelFile(mapel)}.\nNama file dasar: ${fileNameBase}.xlsx`);
+          alert(`Data berhasil dikirim. Jumlah siswa terkirim: ${rows.length}.\nCek folder Drive ${namaMapelFile(mapel)}.\nNama file dasar: ${fileNameBase}.xlsx`);
         } catch (err) {
           console.error(err);
           alert("Gagal mengirim data: " + (err.message || err));
