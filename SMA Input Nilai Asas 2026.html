@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nilai ASAS Genap SMA Islam Nailul Falaah</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Arial, sans-serif; background:#f5f7f4; color:#142018; }
+  .app { max-width:1320px; margin:20px auto 34px; padding:0 16px; }
+  .panel { background:#fff; border:1px solid #dfe8dd; border-radius:18px; padding:18px; box-shadow:0 8px 24px rgba(20,60,30,.08); margin-bottom:14px; }
+  .top-panel { border-top:8px solid #2563eb; }
+  .app-title { text-align:center; font-family:'Times New Roman', serif; font-size:16pt; font-weight:bold; line-height:1.22; margin:0 0 16px; color:#102718; }
+  .controls { display:grid; grid-template-columns: 0.95fr .55fr .85fr 1.9fr; gap:12px; align-items:end; }
+  label { display:block; font-weight:bold; margin-bottom:6px; color:#1f3b27; }
+  select, input[type="text"], input[type="number"] { width:100%; padding:10px 11px; border:1.5px solid #98aa9d; border-radius:10px; font-size:14px; background:#fff; outline:none; }
+  select:focus, input:focus { border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.14); }
+  input[readonly] { background:#f0f6f1; font-weight:bold; color:#1f3b27; }
+  .buttons { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; align-items:center; }
+  button { border:0; border-radius:11px; padding:10px 15px; font-weight:bold; cursor:pointer; font-size:14px; transition:.15s ease; }
+  button:hover { transform:translateY(-1px); filter:brightness(.98); }
+  .blue { background:#2563eb; color:white; } .green { background:#16a34a; color:white; } .gray { background:#e8eee8; color:#16351f; } .red { background:#dc2626; color:white; } .yellow { background:#facc15; color:#000000; }
+  .hint { margin-top:10px; font-size:13px; line-height:1.5; color:#425347; }
+  .formula-box { margin-top:12px; padding:12px; border:1px solid #93c5fd; background:#eff6ff; border-radius:14px; color:#17381f; }
+  .formula-title { font-weight:bold; margin-bottom:8px; }
+  .formula-vertical { display:grid; gap:3px; font-size:14px; line-height:1.35; }
+  .formula-vertical div { padding:3px 0; }
+  .formula-small { font-size:12px; color:#425347; margin-top:8px; }
+  .print-formula { margin:2mm 0 3mm; font-size:10.5pt; line-height:1.25; border:1px solid #000; padding:2mm 3mm; display:inline-block; }
+  .print-formula-title { font-weight:bold; margin-bottom:1mm; }
+
+  .input-head { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; margin-bottom:8px; }
+  .input-head h2 { margin:0; color:#18391f; }
+  .pill { display:inline-block; background:#dbeafe; color:#1d4ed8; border:1px solid #93c5fd; border-radius:999px; padding:6px 10px; font-size:12px; font-weight:bold; }
+  table { width:100%; border-collapse:collapse; background:white; }
+  th, td { border:2px solid #000; padding:7px; font-size:12pt; line-height:1.5; }
+  th { background:#1d4ed8; color:white; text-align:center; font-weight:bold; }
+  td.center { text-align:center; }
+  td.name { text-align:left; }
+  .screen-table input { border:1.5px solid #83958a; text-align:center; border-radius:8px; padding:7px; }
+  .input-error { background-color: #fee2e2 !important; border-color: #dc2626 !important; color: #991b1b !important; }
+  #printArea { display:none; }
+  .modal-backdrop { display:none; position:fixed; inset:0; background:rgba(0,0,0,.42); z-index:50; padding:18px; align-items:center; justify-content:center; }
+  .modal-backdrop.show { display:flex; }
+  .modal { width:min(760px, 96vw); max-height:88vh; overflow:auto; background:white; border-radius:20px; box-shadow:0 20px 70px rgba(0,0,0,.25); border:1px solid #dfe8dd; }
+  .modal-header { padding:16px 18px; border-bottom:1px solid #e5eee5; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .modal-header h3 { margin:0; color:#17381f; }
+  .modal-body { padding:16px 18px; }
+  .modal-close { background:#eef3ee; color:#1f3b27; padding:8px 11px; }
+  .download-summary { background:#eff6ff; border:1px solid #93c5fd; border-radius:14px; padding:12px; line-height:1.55; margin-bottom:12px; }
+  .batch-box { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:8px; }
+  .batch-box label { border:1.5px solid #c6d3c8; border-radius:12px; padding:11px; font-weight:bold; background:#fbfdfb; display:flex; gap:8px; align-items:flex-start; line-height:1.25; }
+  .batch-box label:hover { border-color:#2563eb; background:#eff6ff; }
+  .saved-badge { display:inline-block; margin-top:3px; padding:2px 7px; border-radius:999px; background:#dcfce7; color:#166534; font-size:11px; font-weight:bold; }
+  .empty-badge { display:inline-block; margin-top:3px; padding:2px 7px; border-radius:999px; background:#fee2e2; color:#991b1b; font-size:11px; font-weight:bold; }
+  .modal-actions { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:16px; }
+  @media (max-width: 900px) { .controls { grid-template-columns:1fr; } .batch-box { grid-template-columns:repeat(2,1fr); } .input-head { display:block; } }
+  @page { size: 215mm 330mm; margin: 8mm 8mm 8mm 16mm; }
+  @media print {
+    body { background:white; }
+    .no-print { display:none !important; }
+    #printArea { display:block !important; }
+    .app { margin:0; padding:0; max-width:none; }
+    .panel { box-shadow:none; padding:0; margin:0; border-radius:0; }
+  }
+
+  .print-page {
+    width:215mm;
+    height:329mm;
+    background:white;
+    padding:10mm 10mm 10mm 20mm;
+    box-sizing: border-box;
+    page-break-after:always;
+    page-break-inside:avoid;
+    overflow:hidden;
+    font-family: Arial, sans-serif;
+    font-size:12pt;
+    line-height:1.5;
+  }
+  .print-page:last-child { page-break-after:avoid !important; margin-bottom:0; }
+  .print-title {
+    text-align:center;
+    font-family:'Times New Roman', serif;
+    font-size:16pt;
+    font-weight:bold;
+    line-height:1.15;
+    margin:0 0 6mm;
+  }
+  .meta { margin-bottom:3mm; }
+  .meta div { display:grid; grid-template-columns:38mm 4mm 1fr; line-height:1.35; }
+  .nilai-table th, .nilai-table td { font-size:11pt; padding:2.7px 5px; line-height:1.2; }
+  .nilai-table .no { width:9mm; text-align:center; }
+  .nilai-table .name { width:auto; }
+  .nilai-table .score { width:24mm; text-align:center; }
+  .signatures { display:grid; grid-template-columns:1fr 1fr; gap:26mm; margin-top:6mm; align-items:start; }
+  .sig { text-align:left; min-height:42mm; min-width:0; }
+  .sig-space { height:28mm; }
+  .sig-name { font-weight:bold; text-decoration:underline; display:inline-block; max-width:100%; white-space:normal; line-height:1.2; font-size:11pt; }
+  .signature-img { width:62mm; height:28mm; object-fit:contain; object-position:left center; display:block; margin:0 0 -1mm; }
+  .signature-preview { max-width:140px; max-height:70px; object-fit:contain; border:1px dashed #c6d3c8; border-radius:10px; background:#fff; padding:4px; }
+  .ttd-status-box { margin-top:10px; padding:12px; background:#f8fbf8; border:1px dashed #c6d3c8; border-radius:14px; }
+  .ttd-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; align-items:center; }
+  .btn-text-green { background:#e8f5ee; color:#198754; border:1px solid #bfe1cc; }
+  .btn-text-red { background:#fff0f0; color:#dc2626; border:1px solid #f2bcbc; }
+  .signature-pad { width:100%; height:230px; border:2px dashed #98aa9d; border-radius:14px; background:#fff; touch-action:none; display:block; }
+  .signature-pad-help { font-size:13px; color:#425347; margin:8px 0 0; line-height:1.45; }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #ffffff;
+    background: #2563eb;
+    border-radius: 12px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: .2s ease;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+  .back-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+  }
+  .back-btn svg {
+    transition: transform 0.2s ease;
+  }
+  .back-btn:hover svg {
+    transform: translateX(-4px);
+  }
+  @media (max-width: 640px) {
+    .back-btn { width: 100%; justify-content: center; }
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js">
+</script>
+</head>
+<body>
+<div class="app">
+<section class="panel no-print top-panel">
+<a href="index.html" class="back-btn no-print">
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+  </svg>
+  <span>Kembali ke Menu Utama</span>
+</a>
+<h1 class="app-title">Nilai Asli Asesmen Sumatif Akhir Semester Genap<br>SMA Islam Nailul Falaah Tahun 2025/2026</h1>
+<div class="controls">
+<div>
+<label>Korektor ASAS</label>
+<select id="korektor">
+</select>
+</div>
+<div>
+<label>Kelas</label>
+<select id="kelas">
+</select>
+</div>
+<div>
+<label>Mata Pelajaran</label>
+<select id="mapel">
+</select>
+</div>
+<div>
+<label>Guru Pengampu Mapel</label>
+<input id="pengampu" readonly>
+</div>
+</div>
+<div class="buttons">
+<button class="blue" onclick="saveData()">Simpan Data</button>
+<button class="yellow" onclick="kirimData()">KIRIM DATA</button>
+<button class="red" onclick="resetNilai()">Reset Nilai</button>
+</div>
+<p class="hint">
+<b>Catatan:</b> Skor Umum harus bilangan cacah. Skor Cek Premis boleh desimal. Tombol Simpan Data menyimpan nilai sementara di browser. Tombol KIRIM DATA akan mengirim nilai ke DATABASE dan halaman rekap nilai. Tanda tangan Kepala Sekolah otomatis masuk ke PDF dan Excel. Korektor bisa membuat tanda tangan langsung di aplikasi.</p>
+<div id="ttdStatus" class="hint ttd-status-box">
+</div>
+</section>
+<section class="panel no-print">
+<div class="input-head">
+<div>
+<h2>Input Nilai</h2>
+<div id="statusInput" class="hint">Pilih korektor, kelas, dan mata pelajaran.</div>
+</div>
+<span class="pill">Skor Umum bilangan cacah • Cek Premis boleh desimal</span>
+</div>
+<table class="screen-table" style="margin-top:10px;">
+<thead>
+<tr>
+<th style="width:50px;">No</th>
+<th>Nama Peserta Didik</th>
+<th style="width:150px;">Skor Umum</th>
+<th style="width:170px;">Skor Cek Premis</th>
+<th style="width:140px;">Nilai Akhir</th>
+</tr>
+</thead>
+<tbody id="tbodyInput">
+</tbody>
+</table>
+<div id="screenSignatures" class="no-print" style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed #dfe8dd;">
+</div>
+</section>
+<div id="downloadModal" class="modal-backdrop no-print" onclick="closeDownloadPopup(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h3>Unduh Data</h3>
+</div>
+<div class="modal-body">
+<div id="downloadInfo" class="download-summary">Pilih korektor terlebih dahulu.</div>
+<p class="hint">Kelas dan mapel yang sudah punya data tersimpan akan otomatis tercentang. PDF tetap per halaman F4. Excel menjadi 1 file dengan sheet berbeda untuk setiap mapel/kelas.</p>
+<div class="buttons" style="margin-top:8px;">
+<button class="gray" onclick="pilihSemuaKelas(true)">Pilih Semua</button>
+<button class="gray" onclick="pilihSemuaKelas(false)">Kosongkan</button>
+<button class="red" onclick="resetSemuaDataUnduhan()">Reset Data Tersimpan</button>
+</div>
+<div id="batchKelas" class="batch-box">
+</div>
+<div class="modal-actions">
+<button class="green" onclick="unduhPDF()">Unduh PDF Sekarang</button>
+<button class="blue" onclick="unduhExcel()">Unduh Excel Sekarang</button>
+<button class="gray" onclick="closeDownloadPopup()">Tutup</button>
+</div>
+</div>
+</div>
+</div>
+<div id="signatureModal" class="modal-backdrop no-print" onclick="closeSignaturePopup(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h3>Buat Tanda Tangan Korektor</h3>
+<button class="modal-close" onclick="closeSignaturePopup()">Tutup</button>
+</div>
+<div class="modal-body">
+<canvas id="signatureCanvas" class="signature-pad">
+</canvas>
+<p class="signature-pad-help">Coret tanda tangan langsung pada kotak putih, atau klik Unggah Gambar untuk memakai file tanda tangan dari perangkat.</p>
+<div class="modal-actions">
+<button class="gray" onclick="clearSignaturePad()">Clear</button>
+<button class="green" onclick="saveSignaturePad()">Save</button>
+<button class="gray" onclick="triggerSignatureImageUpload()">Unggah Gambar</button>
+<input id="signatureImageInput" type="file" accept="image/*" style="display:none" onchange="uploadSignatureImage(event)">
+</div>
+</div>
+</div>
+</div>
+<section id="printArea">
+</section>
+</div>
+<script>
+const DATA = {
+  "kepalaJabatan": "Kepala SMA Islam Nailul Falaah",
+  "kepalaNama": "Azza Latifatus Zamairoh, S.Pd, Gr.",
+  "guru": [
+    "Ahmad Taufiqurrohman",
+    "Ahmad Ulin Nuha, Lc.",
+    "Alma Naimatul Miladiah, S.Pd, Gr.",
+    "Anisatul Jannah Mulyono, S.Pd, Gr.",
+    "Arby Zulkifli, S.Pd, Gr.",
+    "Arief Rahman Hakim, S.Pd, Gr.",
+    "Arsa Rizky Imanda, S.Pd.",
+    "Azza Latifatus Zamairoh, S.Pd, Gr.",
+    "Bambang Triawan Pamungkas, S.Pd.",
+    "Dany Maulana Rizky, S.Pd, Gr.",
+    "Denata Novenda Afgenesya, S.Pd, Gr.",
+    "Dwi Wulandari, S.Pd, Gr.",
+    "Ferri Kurniawan, S.Pd.",
+    "Fitrotun Nisa, S.Pd.",
+    "Jalilah Al Khasanah, S.Pd.",
+    "Marwah Junaedi, M.Pd.",
+    "Mohammad Abdul Mukhid, S.Si, Gr.",
+    "Moreno Figo Ariyansyah Wibowo, S.Pd.",
+    "Muhammad Riza Khairul Tantomi, S.Pd.",
+    "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+    "Nur Amalia Maurie Husna, S.Pd, Gr.",
+    "Nushah Agita Widayanti, S.Pd, Gr.",
+    "Peni, S.Pd, Gr.",
+    "Rizka Amilia Rosa S.E.",
+    "Rosita Eka Mardiana, S.Pd, Gr.",
+    "Tiagatus Luqman Widyadhana, S.Pd.",
+    "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+    "Ummi Rihana, S.Pd.",
+    "Wulan Aulia Al Azhar, S.Pd.",
+    "Zihrul Fauzi, S.Pd, Gr."
+  ],
+  "mapel": [
+    "BAHASA DAERAH",
+    "BAHASA INDONESIA",
+    "BAHASA INGGRIS",
+    "INFORMATIKA",
+    "IPA",
+    "IPS",
+    "MATEMATIKA",
+    "PAI",
+    "PJOK",
+    "PKN",
+    "SENI BUDAYA"
+  ],
+  "kelas": [
+    "10A",
+    "10B",
+    "11A",
+    "11B"
+  ],
+  "siswa": {
+    "10A": [
+      "Adibah Naylas Sifa'",
+      "Amira Qotrunnada",
+      "Anasya Widyawati",
+      "Dhea Roikhaanah",
+      "Elfina Salsabila",
+      "Fauzana Alia Nafisa",
+      "Khoirunnisa",
+      "Kholishotun Naswa",
+      "Masrifatun Qonifatur Rohma",
+      "Naily Alifiatuz Zuhriyah",
+      "Najwa Yasmin Wirawan",
+      "Nuriyati Safrillah Amanda Syakirah",
+      "Putri Dini Vatma Naysila",
+      "Refaisya Elvaretta",
+      "Salwa Selviya Zahrotujasmine",
+      "Syariifah",
+      "Thalita Eka Salsabila",
+      "Zulfaa"
+    ],
+    "10B": [
+      "Eka Putra Lukiansah",
+      "Iqbal Fadilansyah",
+      "M. Umar Faruq",
+      "Mochammad Arby Firmansyah",
+      "Mohamad Zahid Hamidi",
+      "Muchammad Salman Alfarisi",
+      "Muh Nuril Zidan Ramadhan",
+      "Muhammad Abid Fakhri",
+      "Muhammad Abid Nur Hudisa",
+      "Muhammad Faruq Budi Ramadhan",
+      "Muhammad Rafid Nur Taslim",
+      "Muhammad Suryo Ramadhan",
+      "Muhammad Yusril Alfathih",
+      "Okta Zahzad Awangga",
+      "Pandu Abdillah",
+      "Putraku Azhrael Zahro Dianto",
+      "Sa'da Abdullah Asyrafal Anam"
+    ],
+    "11A": [
+      "Aira Fawwazahana",
+      "Aqila Fatimatuzzahra",
+      "Auliyaul Nuril Fitriyah",
+      "Azalia Muizzatin Billah Subagio",
+      "Charisma Berlian Putri Medina",
+      "Dayyinah",
+      "Dzakiyyah",
+      "Gabby Carissa Tjahjadi",
+      "Hasna Ataniya Rabbani",
+      "Kharisma Maulidah",
+      "Nadia Khoirun Nisa'",
+      "Nisa Wulandari",
+      "Nurul Mutawassith Hasani",
+      "Rohadatul Aiysy",
+      "Roihana",
+      "Salma Nur Wijayanti",
+      "Syaira Halimatussa'diyah Quranina Mujit",
+      "Zaimatul Ummah",
+      "Zakia Firda Sari"
+    ],
+    "11B": [
+      "Ahmad Raihan Alhamdani",
+      "Chaazim",
+      "Daffa Almer Dzaky",
+      "Faizul Akbar Rudianzah",
+      "Jahfal",
+      "Jefrianto",
+      "Moch. Sabilah Rossadi",
+      "Mohammad Usamah Ababil",
+      "Muhammad Shohafy Shifak",
+      "Muhammad Syahrun Nafis Abha",
+      "Sirojuddin",
+      "Taufiqul Khakim",
+      "Zaini Haidar Ali Yahya",
+      "Zainul Abidin"
+    ]
+  },
+  "pengampu": {
+    "BAHASA DAERAH|10A": "Azza Latifatus Zamairoh, S.Pd, Gr.",
+    "BAHASA DAERAH|11A": "Azza Latifatus Zamairoh, S.Pd, Gr.",
+    "BAHASA DAERAH|10B": "Marwah Junaedi, M.Pd.",
+    "BAHASA DAERAH|11B": "Marwah Junaedi, M.Pd.",
+    "BAHASA INDONESIA|10A": "Anisatul Jannah Mulyono, S.Pd, Gr.",
+    "BAHASA INDONESIA|11A": "Anisatul Jannah Mulyono, S.Pd, Gr.",
+    "BAHASA INDONESIA|11B": "Arby Zulkifli, S.Pd, Gr.",
+    "BAHASA INDONESIA|10B": "Zihrul Fauzi, S.Pd, Gr.",
+    "BAHASA INGGRIS|10B": "Tiagatus Luqman Widyadhana, S.Pd.",
+    "BAHASA INGGRIS|11B": "Tiagatus Luqman Widyadhana, S.Pd.",
+    "BAHASA INGGRIS|10A": "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+    "BAHASA INGGRIS|11A": "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+    "INFORMATIKA|10B": "Ahmad Taufiqurrohman",
+    "INFORMATIKA|11B": "Arief Rahman Hakim, S.Pd, Gr.",
+    "INFORMATIKA|10A": "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+    "INFORMATIKA|11A": "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+    "IPA|11A": "Alma Naimatul Miladiah, S.Pd, Gr.",
+    "IPA|10B": "Mohammad Abdul Mukhid, S.Si, Gr.",
+    "IPA|11B": "Mohammad Abdul Mukhid, S.Si, Gr.",
+    "IPA|10A": "Nur Amalia Maurie Husna, S.Pd, Gr.",
+    "IPS|10A": "Jalilah Al Khasanah, S.Pd.",
+    "IPS|11A": "Rizka Amilia Rosa S.E.",
+    "IPS|10B": "Zihrul Fauzi, S.Pd, Gr.",
+    "IPS|11B": "Zihrul Fauzi, S.Pd, Gr.",
+    "MATEMATIKA|10A": "Dwi Wulandari, S.Pd, Gr.",
+    "MATEMATIKA|11A": "Dwi Wulandari, S.Pd, Gr.",
+    "MATEMATIKA|10B": "Moreno Figo Ariyansyah Wibowo, S.Pd.",
+    "MATEMATIKA|11B": "Moreno Figo Ariyansyah Wibowo, S.Pd.",
+    "PAI|10B": "Bambang Triawan Pamungkas, S.Pd.",
+    "PAI|11B": "Bambang Triawan Pamungkas, S.Pd.",
+    "PAI|10A": "Ummi Rihana, S.Pd.",
+    "PAI|11A": "Ummi Rihana, S.Pd.",
+    "PJOK|10B": "Dany Maulana Rizky, S.Pd, Gr.",
+    "PJOK|11B": "Dany Maulana Rizky, S.Pd, Gr.",
+    "PJOK|10A": "Denata Novenda Afgenesya, S.Pd, Gr.",
+    "PJOK|11A": "Denata Novenda Afgenesya, S.Pd, Gr.",
+    "PKN|10B": "Ferri Kurniawan, S.Pd.",
+    "PKN|11B": "Ferri Kurniawan, S.Pd.",
+    "PKN|10A": "Peni, S.Pd, Gr.",
+    "PKN|11A": "Peni, S.Pd, Gr.",
+    "SENI BUDAYA|11A": "Anisatul Jannah Mulyono, S.Pd, Gr.",
+    "SENI BUDAYA|10B": "Dany Maulana Rizky, S.Pd, Gr.",
+    "SENI BUDAYA|11B": "Dany Maulana Rizky, S.Pd, Gr.",
+    "SENI BUDAYA|10A": "Nadiah Alma Ratnaduhita, S.Pd, Gr."
+  }
+};
+const MONTHS = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+const DEFAULT_SIGNATURE_DATA = "data:image/png;base64,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";
+const SIGNATURE_KEY = "rapot_asas_signature_kepala";
+const MAPEL_40 = ["MATEMATIKA","IPA"];
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw7fcKTyAgHdPAKHuoeUhgmnlcZwvYxrpL-G9JBcRPGTZvIyl6p_Ap7kBKxpJkw6KomYQ/exec";
+function $(id) { return document.getElementById(id); }
+function opt(select, values, placeholder) {
+  select.innerHTML = `<option value="">${placeholder}</option>`;
+  values.forEach(v => {
+    const o = document.createElement("option"); o.value = v; o.textContent = v; select.appendChild(o);
+  });
+}
+function init() {
+  opt($("korektor"), DATA.guru, "-- Pilih Korektor --");
+  opt($("kelas"), DATA.kelas, "-- Pilih Kelas --");
+  opt($("mapel"), DATA.mapel, "-- Pilih Mapel --");
+  ["korektor","kelas","mapel"].forEach(id => $(id).addEventListener("change", tampilkanTabel));
+  tampilkanTabel();
+  updateTtdStatus();
+}
+function pengampu(mapel, kelas) { return DATA.pengampu[`${mapel}|${kelas}`] || "-"; }
+function skema(mapel) {
+  return MAPEL_40.includes(mapel)
+    ? { maxUmum: 30, maxPremis: 10, pembagi: 40 }
+    : { maxUmum: 35, maxPremis: 10, pembagi: 45 };
+}
+function rumusHTML(mapel) {
+  if (!mapel) {
+    return `<div class="formula-title">Rumus Nilai Akhir</div>
+<div class="formula-vertical">
+<div>Pilih kelas dan mata pelajaran terlebih dahulu.</div>
+</div>`;
+  }
+  const s = skema(mapel);
+  return `<div class="formula-title">Rumus Nilai Akhir ${mapel}</div>
+<div class="formula-vertical">
+<div>Nilai Akhir</div>
+<div>=</div>
+<div>(Skor Umum + Skor Cek Premis)</div>
+<div>÷ ${s.pembagi}</div>
+<div>× 100</div>
+</div>
+<div class="formula-small">Skor Umum maksimal ${s.maxUmum}. Skor Cek Premis maksimal ${s.maxPremis}. Pembagi ${s.pembagi}.</div>`;
+}
+function rumusPrintHTML(mapel) {
+  const s = skema(mapel);
+  return `<div class="print-formula">
+<div class="print-formula-title">Rumus Nilai Akhir</div>
+<div>Nilai Akhir</div>
+<div>=</div>
+<div>(Skor Umum + Skor Cek Premis)</div>
+<div>÷ ${s.pembagi}</div>
+<div>× 100</div>
+<div>Skor Umum maksimal ${s.maxUmum}, Cek Premis maksimal ${s.maxPremis}</div>
+</div>`;
+}
+function key(kelas=$("kelas").value, mapel=$("mapel").value, korektor=$("korektor").value) {
+  return "rapot_asas_v3|" + korektor + "|" + mapel + "|" + kelas;
+}
+function safeNum(v) { const n = Number(v); return isNaN(n) ? 0 : n; }
+function tampilkanTabel() {
+  const kelas=$("kelas").value, mapel=$("mapel").value, korektor=$("korektor").value;
+  $("pengampu").value = (mapel && kelas) ? pengampu(mapel, kelas) : "";
+  const tbody=$("tbodyInput"); tbody.innerHTML="";
+  if(!kelas || !mapel || !korektor) {
+    $("statusInput").textContent = "Pilih korektor, kelas, dan mata pelajaran terlebih dahulu.";
+    $("screenSignatures").innerHTML = "";
+    updateTtdStatus();
+    return;
+  }
+  const s=skema(mapel);
+  $("statusInput").innerHTML = `Kelas <b>${kelas}</b>
+<br>Mapel <b>${mapel}</b>
+<br>Guru Pengampu <b>${pengampu(mapel, kelas)}</b>
+<br>Skor Umum 0-${s.maxUmum}<br>Skor Cek Premis 0-10`;
+  DATA.siswa[kelas].forEach((nama,i)=> {
+    tbody.insertAdjacentHTML("beforeend", `
+      <tr>
+<td class="center">${i+1}</td>
+<td class="name">${nama}</td>
+<td>
+<input type="number" min="0" max="${s.maxUmum}" step="1" data-i="${i}" data-field="umum" oninput="validasiHitung(this)">
+</td>
+<td>
+<input type="number" min="0" max="10" step="0.01" data-i="${i}" data-field="premis" oninput="validasiHitung(this)">
+</td>
+<td class="center akhir" data-i="${i}">0</td>
+</tr>`);
+  });
+  loadData(false);
+  hitungSemua();
+  updateScreenSignatures();
+}
+
+function getKepalaTandaTangan() {
+  return DEFAULT_SIGNATURE_DATA;
+}
+function korektorSignatureKey(korektor = $("korektor").value) {
+  return "rapot_asas_signature_korektor|" + korektor;
+}
+function getKorektorTandaTangan(korektor = $("korektor").value) {
+  if (!korektor) return "";
+  return localStorage.getItem(korektorSignatureKey(korektor)) || "";
+}
+function imgKepalaTandaTanganHTML() {
+  return `<img class="signature-img" src="${getKepalaTandaTangan()}" alt="Tanda tangan Kepala Sekolah">`;
+}
+function imgKorektorTandaTanganHTML(korektor = $("korektor").value) {
+  const src = getKorektorTandaTangan(korektor);
+  return src ? `<img class="signature-img" src="${src}" alt="Tanda tangan Korektor">` : `<div class="sig-space">
+</div>`;
+}
+function updateTtdStatus() {
+  const box = $("ttdStatus");
+  if (!box) return;
+  const korektor = $("korektor").value;
+  const korektorSrc = getKorektorTandaTangan(korektor);
+  box.innerHTML = `
+    <div>
+<b>Tanda tangan aktif</b>
+</div>
+<div style="margin-top:8px; display:grid; grid-template-columns:repeat(2, minmax(180px, 1fr)); gap:12px; align-items:start;">
+<div>
+<div>Tanda tangan kepala sekolah : <b>ok</b>
+</div>
+</div>
+<div>
+<div>Korektor: ${korektor ? `<b>${korektor}</b>` : `<b>pilih korektor dahulu</b>`}</div>
+        ${korektorSrc ? `<img class="signature-preview" src="${korektorSrc}" alt="Preview tanda tangan Korektor">` : `<div style="margin-top:8px; color:#6b7280;">Belum ada tanda tangan korektor.</div>`}
+      </div>
+</div>
+<div class="ttd-actions">
+<button class="btn-text-green" onclick="openSignaturePopup()">Upload Tanda Tangan</button>
+<button class="btn-text-red" onclick="hapusTandaTanganKorektor()">Hapus Tanda Tangan</button>
+</div>
+  `;
+}
+function updateScreenSignatures() {
+  const box = $("screenSignatures");
+  if (!box) return;
+  const korektor = $("korektor").value;
+  if (!korektor) { box.innerHTML = ""; return; }
+  box.innerHTML = `
+    <div class="hint ttd-status-box">
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:26mm; align-items:start;">
+<div>
+<div>
+<b>Kepala Sekolah</b>
+</div>
+<div>${DATA.kepalaJabatan}</div>
+<div style="margin-top:26mm; font-weight:bold; text-decoration:underline; color:#142018;">${DATA.kepalaNama}</div>
+</div>
+<div>
+<div>
+<b>${tanggalCetak()}</b>
+</div>
+<div>Korektor</div>
+<div style="margin-top:26mm; font-weight:bold; text-decoration:underline; color:#142018;">${korektor}</div>
+</div>
+</div>
+</div>
+  `;
+}
+let signaturePadReady = false;
+let signatureDrawing = false;
+let signatureHasInk = false;
+function setupSignaturePad() {
+  const canvas = $("signatureCanvas");
+  if (!canvas || signaturePadReady) return;
+  const ctx = canvas.getContext("2d");
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const ratio = window.devicePixelRatio || 1;
+    const saved = canvas.toDataURL("image/png");
+    canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+    canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.lineWidth = 2.3;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "#111111";
+  }
+  function pos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches && e.touches[0] ? e.touches[0] : e;
+    return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+  }
+  function startDraw(e) {
+    e.preventDefault();
+    signatureDrawing = true;
+    signatureHasInk = true;
+    const p = pos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+  }
+  function draw(e) {
+    if (!signatureDrawing) return;
+    e.preventDefault();
+    const p = pos(e);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+  }
+  function stopDraw() { signatureDrawing = false; }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+  canvas.addEventListener("mousedown", startDraw);
+  canvas.addEventListener("mousemove", draw);
+  window.addEventListener("mouseup", stopDraw);
+  canvas.addEventListener("touchstart", startDraw, { passive:false });
+  canvas.addEventListener("touchmove", draw, { passive:false });
+  window.addEventListener("touchend", stopDraw);
+  signaturePadReady = true;
+}
+function openSignaturePopup() {
+  const korektor = $("korektor").value;
+  if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+  $("signatureModal").classList.add("show");
+  setTimeout(() => { setupSignaturePad(); clearSignaturePad(false); }, 80);
+}
+function closeSignaturePopup(e) {
+  if(e && e.target.id !== "signatureModal") return;
+  $("signatureModal").classList.remove("show");
+}
+function triggerSignatureImageUpload() {
+  const korektor = $("korektor").value;
+  if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+  const input = $("signatureImageInput");
+  if (input) input.click();
+}
+function uploadSignatureImage(event) {
+  const korektor = $("korektor").value;
+  const file = event.target.files && event.target.files[0];
+  if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+  if (!file) return;
+  if (!file.type.startsWith("image/")) return alert("File harus berupa gambar.");
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    localStorage.setItem(korektorSignatureKey(korektor), e.target.result);
+    signatureHasInk = false;
+    updateTtdStatus();
+    updateScreenSignatures();
+    closeSignaturePopup();
+    alert("Gambar tanda tangan korektor berhasil diunggah dan disimpan.");
+    event.target.value = "";
+  };
+  reader.readAsDataURL(file);
+}
+function clearSignaturePad(showAlert = true) {
+  const canvas = $("signatureCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  signatureHasInk = false;
+  if (showAlert) alert("Area tanda tangan sudah dibersihkan.");
+}
+function saveSignaturePad() {
+  const korektor = $("korektor").value;
+  const canvas = $("signatureCanvas");
+  if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+  if (!signatureHasInk) return alert("Tanda tangan masih kosong.");
+  localStorage.setItem(korektorSignatureKey(korektor), canvas.toDataURL("image/png"));
+  updateTtdStatus();
+  updateScreenSignatures();
+  closeSignaturePopup();
+  alert("Tanda tangan korektor berhasil disimpan.");
+}
+function hapusTandaTanganKorektor() {
+  const korektor = $("korektor").value;
+  if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+  localStorage.removeItem(korektorSignatureKey(korektor));
+  updateTtdStatus();
+  updateScreenSignatures();
+  alert("Tanda tangan korektor sudah dihapus.");
+}
+
+function validasiHitung(el) {
+  if(el.dataset.field==="umum") {
+    el.value = el.value.replace(/[^0-9]/g,"");
+  }
+  hitungSemua();
+}
+function hitungSemua() {
+  const mapel=$("mapel").value; if(!mapel) return;
+  const s=skema(mapel);
+  document.querySelectorAll("#tbodyInput tr").forEach(tr => {
+    const elUmum = tr.querySelector('[data-field="umum"]');
+    const elPremis = tr.querySelector('[data-field="premis"]');
+    
+    const umum=safeNum(elUmum.value);
+    const premis=safeNum(elPremis.value);
+    
+    // Validasi Visual
+    if (elUmum.value !== "" && umum > s.maxUmum) elUmum.classList.add("input-error");
+    else elUmum.classList.remove("input-error");
+    
+    if (elPremis.value !== "" && premis > 10) elPremis.classList.add("input-error");
+    else elPremis.classList.remove("input-error");
+
+    tr.querySelector(".akhir").textContent = (((umum+premis)/s.pembagi)*100).toFixed(2);
+  });
+}
+function ambilDataInput() {
+  const arr=[];
+  document.querySelectorAll("#tbodyInput tr").forEach((tr,i)=> {
+    arr.push({
+      nama: DATA.siswa[$("kelas").value][i],
+      umum: tr.querySelector('[data-field="umum"]').value || "",
+      premis: tr.querySelector('[data-field="premis"]').value || "",
+      akhir: tr.querySelector(".akhir").textContent || "0"
+    });
+  });
+  return arr;
+}
+
+function namaKorektorPendek(namaLengkap) {
+  const tanpaGelar = String(namaLengkap || "")
+    .split(",")[0]
+    .replace(/\b(S\.?Pd|Gr|M\.?Pd|S\.?Si|S\.?E|Lc|Drs?|M\.?Si)\b\.?/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  return tanpaGelar.split(" ").filter(Boolean).slice(0, 2).join(" ");
+}
+
+function namaMapelFile(mapel) {
+  const upper = String(mapel || "").toUpperCase().trim();
+  const tetapKapital = ["IPA", "IPS", "PAI", "PKN", "PJOK", "TIK"];
+  if (tetapKapital.includes(upper)) return upper;
+  if (upper === "INFORMATIKA") return "TIK";
+  return upper
+    .toLowerCase()
+    .split(" ")
+    .map((kata) => kata.charAt(0).toUpperCase() + kata.slice(1))
+    .join(" ");
+}
+
+function namaFileDasar(mapel, kelas, korektor) {
+  return `${namaMapelFile(mapel)}_${kelas}_${namaKorektorPendek(korektor)}`.replace(/[\\/:*?"<>|]/g, "_");
+}
+
+function arrayBufferToBase64(buffer) {
+  let binary = "";
+  const bytes = new Uint8Array(buffer);
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize);
+    binary += String.fromCharCode.apply(null, chunk);
+  }
+  return btoa(binary);
+}
+
+function dataRowsUntukDatabase(kelas, mapel, korektor) {
+  const guru = pengampu(mapel, kelas);
+  return dataKelasUntukCetak(kelas, mapel, korektor).map((r) => ({
+    jenjang: "SMA",
+    kelas,
+    namaSiswa: r.nama,
+    mapel,
+    skorUmum: r.umum ?? "",
+    cekPremis: r.premis ?? "",
+    nilaiAkhir: r.akhir ?? "0",
+    korektor,
+    guruPengampu: guru,
+  }));
+}
+
+async function buatBufferExcel(korektor, selected) {
+  if (typeof ExcelJS === "undefined") throw new Error("Library Excel belum termuat. Pastikan perangkat terhubung internet, lalu coba lagi.");
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = "Aplikasi Nilai ASAS SMA Islam Nailul Falaah";
+  wb.created = new Date();
+
+  const kepalaSignatureSrc = getKepalaTandaTangan();
+  const korektorSignatureSrc = getKorektorTandaTangan(korektor);
+  const kepalaSignatureId = wb.addImage({
+    buffer: base64ToArrayBuffer(kepalaSignatureSrc),
+    extension: "png",
+  });
+  const korektorSignatureId = korektorSignatureSrc
+    ? wb.addImage({ buffer: base64ToArrayBuffer(korektorSignatureSrc), extension: "png" })
+    : null;
+
+  selected.forEach((val) => {
+    const [mapel, kelas] = val.split("|");
+    const guru = pengampu(mapel, kelas);
+    const data = dataKelasUntukCetak(kelas, mapel, korektor);
+    const ws = wb.addWorksheet(namaSheetAman(`${kelas} ${mapel}`), {
+      pageSetup: {
+        paperSize: 9,
+        orientation: "portrait",
+        fitToPage: true,
+        fitToWidth: 1,
+        fitToHeight: 0,
+        margins: { left: 0.55, right: 0.25, top: 0.35, bottom: 0.35, header: 0.2, footer: 0.2 },
+      },
+    });
+
+    ws.columns = [
+      { width: 7 }, { width: 42 }, { width: 15 }, { width: 18 }, { width: 16 }, { width: 12 }, { width: 12 },
+    ];
+
+    ws.mergeCells("A1:E1");
+    ws.getCell("A1").value = "Nilai Asli Asesmen Sumatif Akhir Semester Genap";
+    ws.mergeCells("A2:E2");
+    ws.getCell("A2").value = "SMA Islam Nailul Falaah Tahun 2025/2026";
+    [["A4:B4", "C4:E4", "Korektor", korektor], ["A5:B5", "C5:E5", "Kelas", kelas], ["A6:B6", "C6:E6", "Mata Pelajaran", mapel], ["A7:B7", "C7:E7", "Guru Pengampu Mapel", guru]].forEach(([m1, m2, l, v], idx) => {
+      ws.mergeCells(m1); ws.mergeCells(m2);
+      ws.getCell(`A${4 + idx}`).value = l;
+      ws.getCell(`C${4 + idx}`).value = v;
+    });
+    ws.addRow([]);
+    ws.getRow(9).values = ["No", "Nama Peserta Didik", "Skor Umum", "Skor Cek\nPremis", "Nilai Akhir"];
+    data.forEach((r, i) => ws.addRow([i + 1, r.nama, r.umum ?? "", r.premis ?? "", r.akhir ?? "0"]));
+
+    const signBlankRow = 10 + data.length;
+    const signDateRow = signBlankRow + 1;
+    const signTitleRow = signBlankRow + 2;
+    const signNameRow = signBlankRow + 8;
+    while (ws.rowCount < signNameRow) ws.addRow([]);
+    ws.mergeCells(`D${signDateRow}:G${signDateRow}`);
+    ws.getCell(`D${signDateRow}`).value = tanggalCetak();
+    ws.mergeCells(`A${signTitleRow}:B${signTitleRow}`);
+    ws.getCell(`A${signTitleRow}`).value = DATA.kepalaJabatan;
+    ws.mergeCells(`D${signTitleRow}:G${signTitleRow}`);
+    ws.getCell(`D${signTitleRow}`).value = "Korektor";
+    ws.mergeCells(`A${signNameRow}:B${signNameRow}`);
+    ws.getCell(`A${signNameRow}`).value = DATA.kepalaNama;
+    ws.mergeCells(`D${signNameRow}:G${signNameRow}`);
+    ws.getCell(`D${signNameRow}`).value = korektor;
+
+    ws.addImage(kepalaSignatureId, { tl: { col: 0.05, row: signTitleRow + 0.1 }, ext: { width: 220, height: 92 }, editAs: "oneCell" });
+    if (korektorSignatureId !== null) ws.addImage(korektorSignatureId, { tl: { col: 3.05, row: signTitleRow + 0.1 }, ext: { width: 220, height: 92 }, editAs: "oneCell" });
+
+    for (let r = 1; r <= Math.max(ws.rowCount, 54); r++) {
+      const row = ws.getRow(r);
+      if (r <= 2) row.height = 24;
+      else if (r === 8) row.height = 17;
+      else if (r >= 4 && r <= 7) row.height = 22;
+      else if (r === 9) row.height = 31;
+      else if (r > 9 && r < signBlankRow) row.height = 21;
+      else if (r > signTitleRow && r < signNameRow) row.height = 25;
+      else row.height = 21;
+    }
+
+    ws.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+      row.eachCell({ includeEmpty: true }, (cell) => {
+        cell.font = { name: rowNumber <= 2 ? "Times New Roman" : "Arial", size: rowNumber <= 2 ? 16 : 12, bold: rowNumber <= 2 };
+        cell.alignment = { vertical: "middle", horizontal: rowNumber <= 2 ? "center" : "left", wrapText: true };
+      });
+    });
+    for (let r = 4; r <= 7; r++) ws.getCell(`A${r}`).font = { name: "Arial", size: 12, bold: true };
+    ["A9", "B9", "C9", "D9", "E9"].forEach((addr) => {
+      const c = ws.getCell(addr);
+      c.font = { name: "Arial", size: 12, bold: true, color: { argb: "FFFFFFFF" } };
+      c.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF1D4ED8" } };
+      c.alignment = { horizontal: "center", vertical: "middle", wrapText: true };
+    });
+    const border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+    for (let r = 9; r < signBlankRow; r++) {
+      for (let c = 1; c <= 5; c++) {
+        const cell = ws.getRow(r).getCell(c);
+        cell.border = border;
+        cell.alignment = { horizontal: c === 2 ? "left" : "center", vertical: "middle", wrapText: true };
+      }
+    }
+    [ws.getCell(`A${signNameRow}`), ws.getCell(`D${signNameRow}`)].forEach((c) => {
+      c.font = { name: "Arial", size: 12, bold: true, underline: true };
+    });
+  });
+  return await wb.xlsx.writeBuffer();
+}
+
+async function kirimData() {
+  const korektor = $("korektor").value;
+  const kelas = $("kelas").value;
+  const mapel = $("mapel").value;
+  if (!korektor || !kelas || !mapel) return alert("Pilih korektor, kelas, dan mapel dulu.");
+  if (!getKorektorTandaTangan(korektor)) return alert("Tanda tangan korektor wajib diisi sebelum kirim data.");
+  if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.includes("PASTE_URL")) return alert("URL Apps Script belum dipasang di HTML. Deploy Apps Script dulu, lalu masukkan URL Web App ke GAS_WEB_APP_URL.");
+
+  try {
+    hitungSemua();
+    localStorage.setItem(key(), JSON.stringify(ambilDataInput()));
+    const fileNameBase = namaFileDasar(mapel, kelas, korektor);
+    const buffer = await buatBufferExcel(korektor, [`${mapel}|${kelas}`]);
+    const payload = {
+      action: "kirimNilaiSma",
+      jenjang: "SMA",
+      kelas,
+      mapel,
+      korektor,
+      guruPengampu: pengampu(mapel, kelas),
+      fileNameBase,
+      excelBase64: arrayBufferToBase64(buffer),
+      rows: dataRowsUntukDatabase(kelas, mapel, korektor),
+    };
+
+    await fetch(GAS_WEB_APP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+    });
+    alert(`Data dikirim. Cek folder Drive ${namaMapelFile(mapel)}.\nNama file dasar: ${fileNameBase}.xlsx`);
+  } catch (err) {
+    console.error(err);
+    alert("Gagal mengirim data: " + (err.message || err));
+  }
+}
+
+function saveData() {
+  if(!$("korektor").value || !$("kelas").value || !$("mapel").value) return alert("Pilih korektor, kelas, dan mapel dulu.");
+  hitungSemua();
+  localStorage.setItem(key(), JSON.stringify(ambilDataInput()));
+  alert("Data berhasil disimpan di browser ini.");
+}
+function loadData(showAlert=true) {
+  const raw=localStorage.getItem(key());
+  if(!raw) { if(showAlert) alert("Belum ada data tersimpan untuk pilihan ini."); return; }
+  const arr=JSON.parse(raw);
+  document.querySelectorAll("#tbodyInput tr").forEach((tr,i)=> {
+    if(arr[i]) {
+      tr.querySelector('[data-field="umum"]').value = arr[i].umum ?? "";
+      tr.querySelector('[data-field="premis"]').value = arr[i].premis ?? "";
+    }
+  });
+  hitungSemua();
+  if(showAlert) alert("Data tersimpan berhasil dimuat.");
+}
+function resetNilai() {
+  document.querySelectorAll("#tbodyInput input").forEach(i=>i.value="");
+  hitungSemua();
+}
+function tanggalCetak() {
+  const d=new Date();
+  return `Malang, ${d.getDate()} ${MONTHS[d.getMonth()]} 2026`;
+}
+function dataKelasUntukCetak(kelas, mapel, korektor) {
+  const raw = localStorage.getItem(key(kelas,mapel,korektor));
+  if(raw) return JSON.parse(raw);
+  if(kelas===$("kelas").value && mapel===$("mapel").value && korektor===$("korektor").value) return ambilDataInput();
+  return DATA.siswa[kelas].map(nama=>({nama, umum:"", premis:"", akhir:"0"}));
+}
+function pageHTML(kelas, mapel, korektor) {
+  const guru = pengampu(mapel, kelas);
+  const rows = dataKelasUntukCetak(kelas,mapel,korektor).map((r,i)=>`
+    <tr>
+<td class="no">${i+1}</td>
+<td class="name">${r.nama}</td>
+<td class="score">${r.umum ?? ""}</td>
+<td class="score">${r.premis ?? ""}</td>
+<td class="score">${r.akhir ?? "0"}</td>
+</tr>`).join("");
+  return `<div class="print-page">
+<div class="print-title">Nilai Asli Asesmen Sumatif Akhir Semester Genap<br>SMA Islam Nailul Falaah Tahun 2025/2026</div>
+<div class="meta">
+<div>
+<span>Korektor</span>
+<span>:</span>
+<span>${korektor}</span>
+</div>
+<div>
+<span>Kelas</span>
+<span>:</span>
+<span>${kelas}</span>
+</div>
+<div>
+<span>Mata Pelajaran</span>
+<span>:</span>
+<span>${mapel}</span>
+</div>
+<div>
+<span>Guru Pengampu Mapel</span>
+<span>:</span>
+<span>${guru}</span>
+</div>
+</div>
+<table class="nilai-table">
+<thead>
+<tr>
+<th>No</th>
+<th>Nama Peserta Didik</th>
+<th>Skor Umum</th>
+<th>Skor Cek Premis</th>
+<th>Nilai Akhir</th>
+</tr>
+</thead>
+<tbody>${rows}</tbody>
+</table>
+<div class="signatures">
+<div class="sig">
+<div style="height: 1.5em; margin-bottom: 3px;">
+</div>
+<div>${DATA.kepalaJabatan}</div>
+        ${imgKepalaTandaTanganHTML()}
+        <div class="sig-name">${DATA.kepalaNama}</div>
+</div>
+<div class="sig">
+<div style="margin-bottom: 3px;">${tanggalCetak()}</div>
+<div>Korektor</div>
+        ${imgKorektorTandaTanganHTML(korektor)}
+        <div class="sig-name">${korektor}</div>
+</div>
+</div>
+</div>`;
+}
+function adaDataTersimpan(kelas, mapel, korektor) {
+  const raw = localStorage.getItem(key(kelas, mapel, korektor));
+  if(!raw) return false;
+  try {
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) && arr.some(r => String(r.umum ?? "").trim() !== "" || String(r.premis ?? "").trim() !== "");
+  } catch(e) {
+    return false;
+  }
+}
+function renderBatchKelas() {
+  const korektor=$("korektor").value;
+  const box=$("batchKelas");
+  box.innerHTML = "";
+  if (!korektor) return;
+
+  let found = 0;
+  DATA.mapel.forEach(m => {
+    DATA.kelas.forEach(k => {
+      const saved = adaDataTersimpan(k, m, korektor);
+      if (saved) {
+        found++;
+        box.insertAdjacentHTML("beforeend", `
+          <label style="display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:8px;">
+<div style="display:flex; gap:8px; align-items:center; width:100%;">
+<input type="checkbox" value="${m}|${k}" checked>
+<span style="font-size:14px;">Kelas <b>${k}</b>
+</span>
+</div>
+<div style="font-size:11px; color:#198754; margin-left:24px; font-weight:bold; line-height:1.2;">${m}</div>
+</label>`);
+      }
+    });
+  });
+
+  if (found === 0) {
+    box.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #666;">Belum ada data yang disimpan untuk korektor ini.</div>`;
+  }
+}
+function openDownloadPopup() {
+  const korektor=$("korektor").value;
+  const info=$("downloadInfo");
+  renderBatchKelas();
+  if(!korektor) {
+    info.innerHTML = "Pilih <b>korektor</b> terlebih dahulu di menu utama sebelum unduh PDF.";
+  } else {
+    info.innerHTML = `Korektor: <b>${korektor}</b>
+<br>Menampilkan semua data Mapel & Kelas yang sudah tersimpan untuk korektor ini.`;
+  }
+  $("downloadModal").classList.add("show");
+}
+function closeDownloadPopup(e) {
+  if(e && e.target.id !== "downloadModal") return;
+  $("downloadModal").classList.remove("show");
+}
+function pilihSemuaKelas(status) {
+  document.querySelectorAll("#batchKelas input[type='checkbox']").forEach(i=>i.checked=status);
+}
+
+function resetSemuaDataUnduhan() {
+  const yakin = confirm("Yakin ingin menghapus semua data nilai yang tersimpan di browser ini? Tindakan ini tidak bisa dibatalkan.");
+  if (!yakin) return;
+  Object.keys(localStorage).forEach(k => {
+    if (k.startsWith("rapot_asas_v3|")) localStorage.removeItem(k);
+  });
+  renderBatchKelas();
+  resetNilai();
+  alert("Semua data nilai tersimpan sudah dihapus.");
+}
+
+function pilihanUnduh() {
+  return [...document.querySelectorAll("#batchKelas input:checked")].map(i=>i.value);
+}
+function namaSheetAman(nama) {
+  return nama.replace(/[\\/?*\[\]:]/g, "-").substring(0, 31);
+}
+function base64ToArrayBuffer(dataUrl) {
+  const base64 = dataUrl.split(",")[1];
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes.buffer;
+}
+
+async function unduhExcel() {
+  const korektor = $("korektor").value;
+  const selected = pilihanUnduh();
+  if(!korektor) return alert("Pilih korektor terlebih dahulu.");
+  if(selected.length===0) return alert("Centang minimal 1 data yang ingin diunduh.");
+  if(typeof ExcelJS === "undefined" || typeof saveAs === "undefined") return alert("Library Excel belum termuat. Pastikan perangkat terhubung internet, lalu coba lagi.");
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = "Aplikasi Nilai ASAS SMP Islam Nailul Falaah";
+  wb.created = new Date();
+
+  const kepalaSignatureSrc = getKepalaTandaTangan();
+  const korektorSignatureSrc = getKorektorTandaTangan(korektor);
+  const kepalaSignatureId = wb.addImage({ buffer: base64ToArrayBuffer(kepalaSignatureSrc), extension: "png" });
+  const korektorSignatureId = korektorSignatureSrc ? wb.addImage({ buffer: base64ToArrayBuffer(korektorSignatureSrc), extension: "png" }) : null;
+
+  selected.forEach(val => {
+    const [mapel, kelas] = val.split("|");
+    const guru = pengampu(mapel, kelas);
+    const data = dataKelasUntukCetak(kelas, mapel, korektor);
+    const ws = wb.addWorksheet(namaSheetAman(`${kelas} ${mapel}`), {
+      pageSetup: { paperSize: 9, orientation: "portrait", fitToPage: true, fitToWidth: 1, fitToHeight: 0, margins: { left: 0.55, right: 0.25, top: 0.35, bottom: 0.35, header: 0.2, footer: 0.2 } }
+    });
+
+    ws.columns = [
+      { width: 7 }, { width: 42 }, { width: 15 }, { width: 18 }, { width: 16 }, { width: 12 }, { width: 12 }
+    ];
+
+    ws.mergeCells("A1:E1"); ws.getCell("A1").value = "Nilai Asli Asesmen Sumatif Akhir Semester Genap";
+    ws.mergeCells("A2:E2"); ws.getCell("A2").value = "SMP Islam Nailul Falaah Tahun 2025/2026";
+    [["A4:B4","C4:E4", "Korektor", korektor], ["A5:B5","C5:E5", "Kelas", kelas], ["A6:B6","C6:E6", "Mata Pelajaran", mapel], ["A7:B7","C7:E7", "Guru Pengampu Mapel", guru]].forEach(([m1,m2,l,v], idx) => {
+      ws.mergeCells(m1); ws.mergeCells(m2);
+      ws.getCell(`A${4+idx}`).value = l;
+      ws.getCell(`C${4+idx}`).value = v;
+    });
+    ws.addRow([]); // row 8
+    ws.getRow(9).values = ["No", "Nama Peserta Didik", "Skor Umum", "Skor Cek\nPremis", "Nilai Akhir"];
+    data.forEach((r, i) => ws.addRow([i + 1, r.nama, r.umum ?? "", r.premis ?? "", r.akhir ?? "0"]));
+
+    const signBlankRow = 10 + data.length;
+    const signDateRow = signBlankRow + 1;
+    const signTitleRow = signBlankRow + 2;
+    const signNameRow = signBlankRow + 8;
+    while (ws.rowCount < signNameRow) ws.addRow([]);
+    ws.mergeCells(`D${signDateRow}:G${signDateRow}`); ws.getCell(`D${signDateRow}`).value = tanggalCetak();
+    ws.mergeCells(`A${signTitleRow}:B${signTitleRow}`); ws.getCell(`A${signTitleRow}`).value = DATA.kepalaJabatan;
+    ws.mergeCells(`D${signTitleRow}:G${signTitleRow}`); ws.getCell(`D${signTitleRow}`).value = "Korektor";
+    ws.mergeCells(`A${signNameRow}:B${signNameRow}`); ws.getCell(`A${signNameRow}`).value = DATA.kepalaNama;
+    ws.mergeCells(`D${signNameRow}:G${signNameRow}`); ws.getCell(`D${signNameRow}`).value = korektor;
+
+    ws.addImage(kepalaSignatureId, {
+      tl: { col: 0.05, row: signTitleRow + 0.10 },
+      ext: { width: 220, height: 92 },
+      editAs: "oneCell"
+    });
+    if (korektorSignatureId !== null) {
+      ws.addImage(korektorSignatureId, {
+        tl: { col: 3.05, row: signTitleRow + 0.10 },
+        ext: { width: 220, height: 92 },
+        editAs: "oneCell"
+      });
+    }
+
+    for (let r = 1; r <= Math.max(ws.rowCount, 54); r++) {
+      const row = ws.getRow(r);
+      if (r <= 2) row.height = 24;
+      else if (r === 8) row.height = 17;
+      else if (r >= 4 && r <= 7) row.height = 22;
+      else if (r === 9) row.height = 31;
+      else if (r > 9 && r < signBlankRow) row.height = 21;
+      else if (r > signTitleRow && r < signNameRow) row.height = 25;
+      else row.height = 21;
+    }
+
+    ws.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+      row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+        cell.font = { name: rowNumber <= 2 ? "Times New Roman" : "Arial", size: rowNumber <= 2 ? 16 : 12, bold: rowNumber <= 2 };
+        cell.alignment = { vertical: "middle", horizontal: rowNumber <= 2 ? "center" : "left", wrapText: true };
+      });
+    });
+
+    for (let r = 4; r <= 7; r++) ws.getCell(`A${r}`).font = { name: "Arial", size: 12, bold: true };
+    ["A9","B9","C9","D9","E9"].forEach(addr => {
+      const c = ws.getCell(addr);
+      c.font = { name: "Arial", size: 12, bold: true, color: { argb: "FFFFFFFF" } };
+      c.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF198754" } };
+      c.alignment = { horizontal: "center", vertical: "middle", wrapText: true };
+    });
+    const border = { top:{style:"thin"}, left:{style:"thin"}, bottom:{style:"thin"}, right:{style:"thin"} };
+    for (let r = 9; r < signBlankRow; r++) {
+      for (let c = 1; c <= 5; c++) {
+        const cell = ws.getRow(r).getCell(c);
+        cell.border = border;
+        cell.alignment = { horizontal: c === 2 ? "left" : "center", vertical: "middle", wrapText: true };
+      }
+    }
+    [ws.getCell(`A${signNameRow}`), ws.getCell(`D${signNameRow}`)].forEach(c => {
+      c.font = { name: "Arial", size: 12, bold: true, underline: true };
+    });
+  });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const fileName = `Rekap_Nilai_${korektor}.xlsx`.replace(/[\\/:*?"<>|]/g, "_");
+  saveAs(new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }), fileName);
+  $("downloadModal").classList.remove("show");
+}
+
+function unduhPDF() {
+  const korektor=$("korektor").value;
+  const selected=pilihanUnduh();
+  if(!korektor) return alert("Pilih korektor terlebih dahulu.");
+  if(selected.length===0) return alert("Centang minimal 1 data yang ingin diunduh.");
+
+  const printArea = $("printArea");
+  printArea.innerHTML = selected.map(val => {
+    const split = val.split("|");
+    return pageHTML(split[1], split[0], korektor);
+  }).join("");
+  
+  $("downloadModal").classList.remove("show");
+
+  const opt = {
+    margin: 0,
+    filename: `Rekap_Nilai_${korektor}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, logging: false, scrollY: 0 },
+    jsPDF: { unit: 'mm', format: [215, 330], orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  };
+
+  printArea.style.display = 'block';
+  html2pdf().set(opt).from(printArea).save().then(() => {
+    printArea.style.display = 'none';
+    printArea.innerHTML = "";
+  });
+}
+init();
+</script>
+</body>
+</html>

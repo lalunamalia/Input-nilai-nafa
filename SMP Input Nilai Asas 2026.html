@@ -1,0 +1,2033 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nilai ASAS Genap SMP Islam Nailul Falaah</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f7f4;
+        color: #142018;
+      }
+      .app {
+        max-width: 1320px;
+        margin: 20px auto 34px;
+        padding: 0 16px;
+      }
+      .panel {
+        background: #fff;
+        border: 1px solid #dfe8dd;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 8px 24px rgba(20, 60, 30, 0.08);
+        margin-bottom: 14px;
+      }
+      .top-panel {
+        border-top: 8px solid #198754;
+      }
+      .app-title {
+        text-align: center;
+        font-family: "Times New Roman", serif;
+        font-size: 16pt;
+        font-weight: bold;
+        line-height: 1.22;
+        margin: 0 0 16px;
+        color: #102718;
+      }
+      .controls {
+        display: grid;
+        grid-template-columns: 0.95fr 0.55fr 0.85fr 1.9fr;
+        gap: 12px;
+        align-items: end;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6px;
+        color: #1f3b27;
+      }
+      select,
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px 11px;
+        border: 1.5px solid #98aa9d;
+        border-radius: 10px;
+        font-size: 14px;
+        background: #fff;
+        outline: none;
+      }
+      select:focus,
+      input:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.14);
+      }
+      input[readonly] {
+        background: #f0f6f1;
+        font-weight: bold;
+        color: #1f3b27;
+      }
+      .buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+        align-items: center;
+      }
+      button {
+        border: 0;
+        border-radius: 11px;
+        padding: 10px 15px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 14px;
+        transition: 0.15s ease;
+      }
+      button:hover {
+        transform: translateY(-1px);
+        filter: brightness(0.98);
+      }
+      .blue {
+        background: #2563eb;
+        color: white;
+      }
+      .green {
+        background: #198754;
+        color: white;
+      }
+      .gray {
+        background: #e8eee8;
+        color: #16351f;
+      }
+      .red {
+        background: #dc2626;
+        color: white;
+      }
+      .yellow {
+        background: #facc15;
+        color: #000000;
+      }
+      .hint {
+        margin-top: 10px;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #425347;
+      }
+      .formula-box {
+        margin-top: 12px;
+        padding: 12px;
+        border: 1px solid #cfe8d6;
+        background: #f1f8f3;
+        border-radius: 14px;
+        color: #17381f;
+      }
+      .formula-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+      .formula-vertical {
+        display: grid;
+        gap: 3px;
+        font-size: 14px;
+        line-height: 1.35;
+      }
+      .formula-vertical div {
+        padding: 3px 0;
+      }
+      .formula-small {
+        font-size: 12px;
+        color: #425347;
+        margin-top: 8px;
+      }
+      .print-formula {
+        margin: 2mm 0 3mm;
+        font-size: 10.5pt;
+        line-height: 1.25;
+        border: 1px solid #000;
+        padding: 2mm 3mm;
+        display: inline-block;
+      }
+      .print-formula-title {
+        font-weight: bold;
+        margin-bottom: 1mm;
+      }
+
+      .input-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .input-head h2 {
+        margin: 0;
+        color: #18391f;
+      }
+      .pill {
+        display: inline-block;
+        background: #edf8f0;
+        color: #146c43;
+        border: 1px solid #cfe8d6;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+      }
+      th,
+      td {
+        border: 2px solid #000;
+        padding: 7px;
+        font-size: 12pt;
+        line-height: 1.5;
+      }
+      th {
+        background: #198754;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+      }
+      td.center {
+        text-align: center;
+      }
+      td.name {
+        text-align: left;
+      }
+      .screen-table input {
+        border: 1.5px solid #83958a;
+        text-align: center;
+        border-radius: 8px;
+        padding: 7px;
+      }
+      .input-error {
+        background-color: #fee2e2 !important;
+        border-color: #dc2626 !important;
+        color: #991b1b !important;
+      }
+      #printArea {
+        display: none;
+      }
+      .modal-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.42);
+        z-index: 50;
+        padding: 18px;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal-backdrop.show {
+        display: flex;
+      }
+      .modal {
+        width: min(760px, 96vw);
+        max-height: 88vh;
+        overflow: auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
+        border: 1px solid #dfe8dd;
+      }
+      .modal-header {
+        padding: 16px 18px;
+        border-bottom: 1px solid #e5eee5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+      .modal-header h3 {
+        margin: 0;
+        color: #17381f;
+      }
+      .modal-body {
+        padding: 16px 18px;
+      }
+      .modal-close {
+        background: #eef3ee;
+        color: #1f3b27;
+        padding: 8px 11px;
+      }
+      .download-summary {
+        background: #f1f8f3;
+        border: 1px solid #cfe8d6;
+        border-radius: 14px;
+        padding: 12px;
+        line-height: 1.55;
+        margin-bottom: 12px;
+      }
+      .batch-box {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 8px;
+      }
+      .batch-box label {
+        border: 1.5px solid #c6d3c8;
+        border-radius: 12px;
+        padding: 11px;
+        font-weight: bold;
+        background: #fbfdfb;
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        line-height: 1.25;
+      }
+      .batch-box label:hover {
+        border-color: #198754;
+        background: #f1f8f3;
+      }
+      .saved-badge {
+        display: inline-block;
+        margin-top: 3px;
+        padding: 2px 7px;
+        border-radius: 999px;
+        background: #dcfce7;
+        color: #166534;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      .empty-badge {
+        display: inline-block;
+        margin-top: 3px;
+        padding: 2px 7px;
+        border-radius: 999px;
+        background: #fee2e2;
+        color: #991b1b;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      .modal-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+      @media (max-width: 900px) {
+        .controls {
+          grid-template-columns: 1fr;
+        }
+        .batch-box {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .input-head {
+          display: block;
+        }
+      }
+      @page {
+        size: 215mm 330mm;
+        margin: 8mm 8mm 8mm 16mm;
+      }
+      @media print {
+        body {
+          background: white;
+        }
+        .no-print {
+          display: none !important;
+        }
+        #printArea {
+          display: block !important;
+        }
+        .app {
+          margin: 0;
+          padding: 0;
+          max-width: none;
+        }
+        .panel {
+          box-shadow: none;
+          padding: 0;
+          margin: 0;
+          border-radius: 0;
+        }
+      }
+
+      .print-page {
+        width: 215mm;
+        height: 329mm;
+        background: white;
+        padding: 10mm 10mm 10mm 20mm;
+        box-sizing: border-box;
+        page-break-after: always;
+        page-break-inside: avoid;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+        line-height: 1.5;
+      }
+      .print-page:last-child {
+        page-break-after: avoid !important;
+        margin-bottom: 0;
+      }
+      .print-title {
+        text-align: center;
+        font-family: "Times New Roman", serif;
+        font-size: 16pt;
+        font-weight: bold;
+        line-height: 1.15;
+        margin: 0 0 6mm;
+      }
+      .meta {
+        margin-bottom: 3mm;
+      }
+      .meta div {
+        display: grid;
+        grid-template-columns: 38mm 4mm 1fr;
+        line-height: 1.35;
+      }
+      .nilai-table th,
+      .nilai-table td {
+        font-size: 11pt;
+        padding: 2.7px 5px;
+        line-height: 1.2;
+      }
+      .nilai-table .no {
+        width: 9mm;
+        text-align: center;
+      }
+      .nilai-table .name {
+        width: auto;
+      }
+      .nilai-table .score {
+        width: 24mm;
+        text-align: center;
+      }
+      .signatures {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 26mm;
+        margin-top: 6mm;
+        align-items: start;
+      }
+      .sig {
+        text-align: left;
+        min-height: 42mm;
+        min-width: 0;
+      }
+      .sig-space {
+        height: 28mm;
+      }
+      .sig-name {
+        font-weight: bold;
+        text-decoration: underline;
+        display: inline-block;
+        max-width: 100%;
+        white-space: normal;
+        line-height: 1.2;
+        font-size: 11pt;
+      }
+      .signature-img {
+        width: 62mm;
+        height: 28mm;
+        object-fit: contain;
+        object-position: left center;
+        display: block;
+        margin: 0 0 -1mm;
+      }
+      .signature-preview {
+        max-width: 140px;
+        max-height: 70px;
+        object-fit: contain;
+        border: 1px dashed #c6d3c8;
+        border-radius: 10px;
+        background: #fff;
+        padding: 4px;
+      }
+      .ttd-status-box {
+        margin-top: 10px;
+        padding: 12px;
+        background: #f8fbf8;
+        border: 1px dashed #c6d3c8;
+        border-radius: 14px;
+      }
+      .ttd-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+        align-items: center;
+      }
+      .btn-text-green {
+        background: #e8f5ee;
+        color: #198754;
+        border: 1px solid #bfe1cc;
+      }
+      .btn-text-red {
+        background: #fff0f0;
+        color: #dc2626;
+        border: 1px solid #f2bcbc;
+      }
+      .signature-pad {
+        width: 100%;
+        height: 230px;
+        border: 2px dashed #98aa9d;
+        border-radius: 14px;
+        background: #fff;
+        touch-action: none;
+        display: block;
+      }
+      .signature-pad-help {
+        font-size: 13px;
+        color: #425347;
+        margin: 8px 0 0;
+        line-height: 1.45;
+      }
+
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: #ffffff;
+        background: #198754;
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-size: 14px;
+        font-weight: bold;
+        transition: .2s ease;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
+      }
+      .back-btn:hover {
+        background: #157347;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(25, 135, 84, 0.3);
+      }
+      .back-btn svg {
+        transition: transform 0.2s ease;
+      }
+      .back-btn:hover svg {
+        transform: translateX(-4px);
+      }
+      @media (max-width: 640px) {
+        .back-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  </head>
+  <body>
+    <div class="app">
+      <section class="panel no-print top-panel">
+
+        <a href="index.html" class="back-btn no-print">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>Kembali ke Menu Utama</span>
+        </a>
+
+        <h1 class="app-title">
+          Nilai Asli Asesmen Sumatif Akhir Semester Genap<br />SMP Islam Nailul
+          Falaah Tahun 2025/2026
+        </h1>
+        <div class="controls">
+          <div>
+            <label>Korektor ASAS</label
+            ><select id="korektor"></select>
+          </div>
+          <div>
+            <label>Kelas</label
+            ><select id="kelas"></select>
+          </div>
+          <div>
+            <label>Mata Pelajaran</label
+            ><select id="mapel"></select>
+          </div>
+          <div>
+            <label>Guru Pengampu Mapel</label><input id="pengampu" readonly />
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="blue" onclick="saveData()">SIMPAN DATA</button>
+          <button class="yellow" onclick="kirimData()">KIRIM DATA</button>
+          <button class="red" onclick="resetNilai()">Reset Nilai</button>
+        </div>
+        <p class="hint">
+          <b>Catatan:</b> Skor Umum harus bilangan cacah. Skor Cek Premis boleh
+          desimal. Tombol SIMPAN DATA menyimpan nilai sementara di browser. Tombol KIRIM DATA akan mengirim nilai ke DATABASE dan halaman rekap nilai. Tanda
+          tangan Kepala Sekolah otomatis masuk ke PDF dan Excel. Korektor bisa
+          membuat tanda tangan langsung di aplikasi.
+        </p>
+        <div id="ttdStatus" class="hint ttd-status-box"></div>
+      </section>
+
+      <section class="panel no-print">
+        <div class="input-head">
+          <div>
+            <h2>Input Nilai</h2>
+            <div id="statusInput" class="hint">
+              Pilih korektor, kelas, dan mata pelajaran.
+            </div>
+          </div>
+          <span class="pill"
+            >Skor Umum bilangan cacah • Cek Premis boleh desimal</span
+          >
+        </div>
+        <table class="screen-table" style="margin-top: 10px">
+          <thead>
+            <tr>
+              <th style="width: 50px">No</th>
+              <th>Nama Peserta Didik</th>
+              <th style="width: 150px">Skor Umum</th>
+              <th style="width: 170px">Skor Cek Premis</th>
+              <th style="width: 140px">Nilai Akhir</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyInput"></tbody>
+        </table>
+        <div
+          id="screenSignatures"
+          class="no-print"
+          style="
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #dfe8dd;
+          "
+        ></div>
+      </section>
+
+      <div
+        id="downloadModal"
+        class="modal-backdrop no-print"
+        onclick="closeDownloadPopup(event)"
+      >
+        <div class="modal" onclick="event.stopPropagation()">
+          <div class="modal-header">
+            <h3>Unduh Data</h3>
+          </div>
+          <div class="modal-body">
+            <div id="downloadInfo" class="download-summary">
+              Pilih korektor terlebih dahulu.
+            </div>
+            <p class="hint">
+              Kelas dan mapel yang sudah punya data tersimpan akan otomatis
+              tercentang. PDF tetap per halaman F4. Excel menjadi 1 file dengan
+              sheet berbeda untuk setiap mapel/kelas.
+            </p>
+            <div class="buttons" style="margin-top: 8px">
+              <button class="gray" onclick="pilihSemuaKelas(true)">
+                Pilih Semua
+              </button>
+              <button class="gray" onclick="pilihSemuaKelas(false)">
+                Kosongkan
+              </button>
+              <button class="red" onclick="resetSemuaDataUnduhan()">
+                Reset Data Tersimpan
+              </button>
+            </div>
+            <div id="batchKelas" class="batch-box"></div>
+            <div class="modal-actions">
+              <button class="green" onclick="unduhPDF()">
+                Unduh PDF Sekarang
+              </button>
+              <button class="blue" onclick="unduhExcel()">
+                Unduh Excel Sekarang
+              </button>
+              <button class="gray" onclick="closeDownloadPopup()">Tutup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="signatureModal"
+        class="modal-backdrop no-print"
+        onclick="closeSignaturePopup(event)"
+      >
+        <div class="modal" onclick="event.stopPropagation()">
+          <div class="modal-header">
+            <h3>Buat Tanda Tangan Korektor</h3>
+            <button class="modal-close" onclick="closeSignaturePopup()">
+              Tutup
+            </button>
+          </div>
+          <div class="modal-body">
+            <canvas id="signatureCanvas" class="signature-pad"></canvas>
+            <p class="signature-pad-help">
+              Coret tanda tangan langsung pada kotak putih, atau klik Unggah
+              Gambar untuk memakai file tanda tangan dari perangkat.
+            </p>
+            <div class="modal-actions">
+              <button class="gray" onclick="clearSignaturePad()">Clear</button>
+              <button class="green" onclick="saveSignaturePad()">Save</button>
+              <button class="gray" onclick="triggerSignatureImageUpload()">
+                Unggah Gambar
+              </button>
+              <input
+                id="signatureImageInput"
+                type="file"
+                accept="image/*"
+                style="display: none"
+                onchange="uploadSignatureImage(event)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="printArea"></section>
+    </div>
+
+    <script>
+      const DATA = {
+        kepalaJabatan: "Kepala SMP Islam Nailul Falaah",
+        kepalaNama: "Ahmad Ulin Nuha, Lc.",
+        guru: [
+          "Ahmad Taufiqurrohman",
+          "Ahmad Ulin Nuha, Lc.",
+          "Alma Naimatul Miladiah, S.Pd, Gr.",
+          "Anisatul Jannah Mulyono, S.Pd, Gr",
+          "Arby Zulkifli, S.Pd, Gr.",
+          "Arief Rahman Hakim, S.Pd, Gr.",
+          "Arsa Rizky Imanda, S.Pd.",
+          "Azza Latifatus Zamairoh, S.Pd, Gr.",
+          "Bambang Triawan Pamungkas, S.Pd.",
+          "Dany Maulana Rizky, S.Pd, Gr.",
+          "Denata Novenda Afgenesya, S.Pd, Gr.",
+          "Dwi Wulandari, S.Pd, Gr.",
+          "Ferri Kurniawan, S.Pd.",
+          "Fitrotun Nisa, S.Pd.",
+          "Jalilah Al Khasanah, S.Pd.",
+          "Marwah Junaedi, M.Pd.",
+          "Mohammad Abdul Mukhid, S.Si, Gr.",
+          "Moreno Figo Ariyansyah Wibowo, S.Pd.",
+          "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+          "Nur Amalia Maurie Husna, S.Pd, Gr.",
+          "Nushah Agita Widayanti, S.Pd, Gr.",
+          "Peni, S.Pd, Gr.",
+          "Rizka Amilia Rosa S.E.",
+          "Rosita Eka Mardiana, S.Pd, Gr.",
+          "Tiagatus Luqman Widyadhana, S.Pd.",
+          "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+          "Ummi Rihana, S.Pd.",
+          "Wulan Aulia Al Azhar, S.Pd.",
+          "Zihrul Fauzi, S.Pd, Gr.",
+        ],
+        mapel: [
+          "BAHASA DAERAH",
+          "BAHASA INDONESIA",
+          "BAHASA INGGRIS",
+          "INFORMATIKA",
+          "IPA",
+          "IPS",
+          "MATEMATIKA",
+          "PAI",
+          "PJOK",
+          "PKN",
+          "SENI BUDAYA",
+        ],
+        kelas: ["7A", "7B", "7C", "7D", "8A", "8B", "8C", "8D", "8E"],
+        siswa: {
+          "7A": [
+            "Aisyah Aqiila Najibah",
+            "Aisyah Wijayanti Candradinata",
+            "Ayunda Tsabita",
+            "Dhohwah Sholicha",
+            "Dzahabiyah Mutiara Angin",
+            "Hanna Gelbina Ulya",
+            "Luluk Yulistiani",
+            "Mahira Hasna Kamila",
+            "Mayla Ghumaishah Majid",
+            "Nadhifa Adinda Zahra",
+            "Naura Ajna Fitria S.",
+            "Nuriyatul Kamilla",
+            "Qorylaila Ramadhani",
+            "Rifka Anaya Nikmatul Azizah",
+            "Robihah",
+            "Robiihatur Roihaanah Lubis",
+            "Shabrina Aqila Adzra R",
+            "Shofiya Salsabila Q.A.S",
+            "Syofia Khoirun Nissa",
+            "Uzla Khoiris Sabila",
+            "Zahira Jauza Salim",
+          ],
+          "8A": [
+            "Amira Sani Nadifa Qolbi",
+            "Anisa Fadia Karim",
+            "Aqilah Annadhifah",
+            "Ariana Desta Janati",
+            "Auliyah Fisagina Mulianto",
+            "Azka Ghoniyah Permatasari",
+            "Azzahra Maharani",
+            "Dzihniyyah Ramadhani",
+            "Fannisa Rehana",
+            "Fira Nadya Chalista",
+            "Indah Puspa Ramadhani",
+            "Janneta Hiyal Ma'wa",
+            "Kanaya Kenzie Ramadhani",
+            "Mar Atus Sholikha",
+            "Najma Maulida Rahma",
+            "Nasha Nafisha Setiawati",
+            "Neisya Oktavia Rahayu",
+            "Nirvana Mufidatus Shifa",
+            "Rofifah Maimunah",
+            "Syifana Maulida",
+            "Vania Raihana Sakhi",
+            "Zivana Nayra Dewi",
+          ],
+          "7B": [
+            "Afizah Khaliqa Putri Azzahra",
+            "Alexsha Candra Dewi Kirana",
+            "Aurani Wahyu Fitria",
+            "Diyanah Lathifah",
+            "Durroh Syaima Faiha",
+            "Gefanda Makayla Zabrina",
+            "Ghea Alya Azzilia",
+            "Istiana Nur Fadilah",
+            "Jaziilah",
+            "Maulidia Zahrotun Nisa'",
+            "Nabila Ainurrohmah",
+            "Nadalia Putrina Shifa",
+            "Nafiska Akasya Pusponegoro",
+            "Nailah Monic Nur Aisyah",
+            "Najwa Narayya Ruditya Ramadhani",
+            "Qisya Auni Raqilla",
+            "Rafidah Bilqiis Firzanah",
+            "Roghdah",
+            "Shofroul Lailiyah",
+            "Sumayyah",
+            "Talita Salsabila Nadhifa",
+            "Tsurroyyah",
+            "Yulia Az Zahra Afika",
+            "Zahirah Nur Hasna",
+          ],
+          "8B": [
+            "Adelia Cahyatusania",
+            "Amilia Rahmawati Dewi",
+            "Anandhita Shofyana Lathifah",
+            "Andini Puspita Sari",
+            "Arini Zalzabila Al Firdaus",
+            "Aryani Aqila Maulida",
+            "Azza Syareyfa Ramadhan Haidar",
+            "Azzah Zhahirah Puthree Khoiri",
+            "Eka Oktavia",
+            "Elsya Dwi Olivia",
+            "Erinna Rifdah Sarwahita",
+            "Himayah Ilmi Zulfana",
+            "Kayla Novirza Aisyah",
+            "Khorida Aulia",
+            "Lintang Wahyu Nastiti",
+            "Nafis Salma Afifah",
+            "Queena Bilqis Sharitry Fiaditarica",
+            "Siti Nur Aisyah",
+            "Tajul A'liyatul Furqonia",
+            "Widia Zahira Putri",
+          ],
+          "7C": [
+            "Abizar Baiqaki Iswanto",
+            "Ahmad Hirzul Fahmil Akbar",
+            "Ahmad Khoirul Azzam",
+            "Alif Al Khusainul Wafi",
+            "Arfan Ma’ruf",
+            "Aryasatya Ghafar Ahmad",
+            "Diego Alfahru Suryanto",
+            "Dimas Farizky Prayoga",
+            "Liu Razenka Sinatrya",
+            "M. Fatkhur Rohman",
+            "M. Irfan Azmi",
+            "M. Rui Fathir Al Fajri",
+            "Moch. Yardan Habibillah U",
+            "Muhammad Faza Fauzan",
+            "Muhammad Syahrul F",
+            "Muhammad Zaidan Falahi A",
+            "Nasrulloh Al Fattah",
+            "Naufal Dary Mahardika",
+            "Rafka Maulana Yusuf",
+            "Vas Indra Dewa",
+            "Zahid",
+            "Zhafran Ahmad Al Ghifary",
+          ],
+          "8C": [
+            "Andini Anja Maulydyah",
+            "Anindya Qothrun Nada",
+            "Asyfi Lailatul Fitriyah",
+            "Audy Anjani",
+            "Aulia Zahra Tsabitha",
+            "Belva Fitria Azmi",
+            "Dini Kamiliyah Azizah",
+            "Fahima Sa'ya",
+            "Faiha Qonita Ayunda Maharani",
+            "Feby Maulida Azahra",
+            "Hikmah Maulidya Zahrotul Muniroh",
+            "Labitta Luthfiatunnisa",
+            "Laili Asyifani",
+            "Mubarikatul Rizqia",
+            "Najah Ramadhani",
+            "Naura Keisha Zahra",
+            "Nayrazahrotus Sifa'ul Qolbi",
+            "Salafa Khodijah Azkiya' Mujit",
+            "Syaima Syahla Syabiyyah",
+            "Syifa Ayyatul Husna",
+            "Syifana Aulia Nugraha",
+            "Thooi'ah",
+            "Ulya Syauqia Iftinan Rofiqoh",
+          ],
+          "7D": [
+            "Achmad Saqoful Iman",
+            "Ahmad Akbar Maulana",
+            "Arsa Adibrata",
+            "Catur Indra Paramarta",
+            "Daffaa",
+            "Fatihur Rijal Al Amin",
+            "Ibrahim Marzein Iantida",
+            "Iqbal Dhian Fikri Ramadani",
+            "Kenzie Julian Nur Irawan",
+            "M. Fauzan Ar Rifqi",
+            "Moch. Ezar Ananda P",
+            "Mochammad Fikri Haikal",
+            "Mohamad Hanif Ridho Ramadhan",
+            "Mohammad Salman Al Farizy",
+            "Muhammad Miqdan Adli",
+            "Muhammad Zain Alif Asshidiq",
+            "Sa'dii",
+            "Salman Za'imul Umam",
+            "Syarifuddin Nur",
+            "Zainuddiin",
+            "Muhammad Fikri Haikal",
+          ],
+          "8D": [
+            "Achmad Jagad Rizqullah",
+            "Ahmad Naufal Abdillah",
+            "Ahmad Raffi Baihaqi",
+            "Ahmad Zaky Abyun Syah",
+            "Al-Bara Fariza Zain Oktaviano",
+            "Alfarisi Wahyu Pratama",
+            "Arjuna Abqary Rafasya",
+            "Muhammad Azam Mahardika",
+            "Muhammad Busthomi",
+            "Muhammad Syaifi",
+            "Muhammad Syauqi Abdulloh",
+            "Muhammad Bahy Abdillah Setiawan",
+            "Raditya Keanu Zafier",
+            "Rizky Andi Lira Alghozy",
+            "Sheva Maulana",
+            "Sholihiin",
+            "Suruur Roziqin",
+            "Wahyu Joyodiningrat",
+          ],
+          "8E": [
+            "Abdulloh Qobus Bilbar",
+            "Achmad Nizam Alfarizy",
+            "Achmad Wildan Lubis",
+            "Ahmad Sufyaan",
+            "Alfian Risqi Rahmadan",
+            "Bagas Satria Kusuma",
+            "Brahman Ahmad Syailendra Hamza",
+            "Ega Atilah Ilhamsyah",
+            "Erwin Kusuma Pratama",
+            "Muhammad Khoirul Huda Hermansyah",
+            "Moh. Muammar Kadafi",
+            "Muchammad Najmudin Nurillah",
+            "M. Nizar Zahir Alamsyah",
+            "Moch Rizki Arrival Radita",
+            "Syabil Jabir Azzam",
+            "Wahyu Joyodiningrat",
+            "Yunior Ravico Caesar Putra",
+            "Zaiimul Umami",
+          ],
+        },
+        pengampu: {
+          "BAHASA DAERAH|7A": "Wulan Aulia Al Azhar, S.Pd.",
+          "BAHASA DAERAH|7B": "Wulan Aulia Al Azhar, S.Pd.",
+          "BAHASA DAERAH|7C": "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "BAHASA DAERAH|7D": "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "BAHASA DAERAH|8A": "Jalilah Al Khasanah, S.Pd.",
+          "BAHASA DAERAH|8B": "Jalilah Al Khasanah, S.Pd.",
+          "BAHASA DAERAH|8C": "Jalilah Al Khasanah, S.Pd.",
+          "BAHASA DAERAH|8D": "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "BAHASA DAERAH|8E": "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "BAHASA INDONESIA|7A": "Nushah Agita Widayanti, S.Pd, Gr.",
+          "BAHASA INDONESIA|7B": "Nushah Agita Widayanti, S.Pd, Gr.",
+          "BAHASA INDONESIA|7C": "Ferri Kurniawan, S.Pd.",
+          "BAHASA INDONESIA|7D": "Ferri Kurniawan, S.Pd.",
+          "BAHASA INDONESIA|8A": "Nushah Agita Widayanti, S.Pd, Gr.",
+          "BAHASA INDONESIA|8B": "Nushah Agita Widayanti, S.Pd, Gr.",
+          "BAHASA INDONESIA|8C": "Nushah Agita Widayanti, S.Pd, Gr.",
+          "BAHASA INDONESIA|8D": "Arby Zulkifli, S.Pd, Gr.",
+          "BAHASA INDONESIA|8E": "Arby Zulkifli, S.Pd, Gr.",
+          "BAHASA INGGRIS|7A": "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+          "BAHASA INGGRIS|7B": "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+          "BAHASA INGGRIS|7C": "Tiagatus Luqman Widyadhana, S.Pd.",
+          "BAHASA INGGRIS|7D": "Tiagatus Luqman Widyadhana, S.Pd.",
+          "BAHASA INGGRIS|8A": "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+          "BAHASA INGGRIS|8B": "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+          "BAHASA INGGRIS|8C": "Tisyrinul Awwal Fatiani, S.S, M.Pd, Gr.",
+          "BAHASA INGGRIS|8D": "Tiagatus Luqman Widyadhana, S.Pd.",
+          "BAHASA INGGRIS|8E": "Tiagatus Luqman Widyadhana, S.Pd.",
+          "INFORMATIKA|7A": "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+          "INFORMATIKA|7B": "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+          "INFORMATIKA|7C": "Ahmad Taufiqurrohman",
+          "INFORMATIKA|7D": "Ahmad Taufiqurrohman",
+          "INFORMATIKA|8A": "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+          "INFORMATIKA|8B": "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+          "INFORMATIKA|8C": "Nadiah Alma Ratnaduhita, S.Pd, Gr.",
+          "INFORMATIKA|8D": "Ahmad Taufiqurrohman",
+          "INFORMATIKA|8E": "Ahmad Taufiqurrohman",
+          "IPA|7A": "Nur Amalia Maurie Husna, S.Pd, Gr.",
+          "IPA|7B": "Nur Amalia Maurie Husna, S.Pd, Gr.",
+          "IPA|7C": "Arsa Rizky Imanda, S.Pd.",
+          "IPA|7D": "Arsa Rizky Imanda, S.Pd.",
+          "IPA|8A": "Fitrotun Nisa, S.Pd.",
+          "IPA|8B": "Nur Amalia Maurie Husna, S.Pd, Gr.",
+          "IPA|8C": "Nur Amalia Maurie Husna, S.Pd, Gr.",
+          "IPA|8D": "Arsa Rizky Imanda, S.Pd.",
+          "IPA|8E": "Arsa Rizky Imanda, S.Pd.",
+          "IPS|7A": "Rosita Eka Mardiana, S.Pd, Gr.",
+          "IPS|7B": "Rosita Eka Mardiana, S.Pd, Gr.",
+          "IPS|7C": "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "IPS|7D": "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "IPS|8A": "Jalilah Al Khasanah, S.Pd.",
+          "IPS|8B": "Rosita Eka Mardiana, S.Pd, Gr.",
+          "IPS|8C": "Rosita Eka Mardiana, S.Pd, Gr.",
+          "IPS|8D": "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "IPS|8E": "Muhammad Riza Khoirul Tantomi, S.Pd.",
+          "MATEMATIKA|7A": "Fitrotun Nisa, S.Pd.",
+          "MATEMATIKA|7B": "Fitrotun Nisa, S.Pd.",
+          "MATEMATIKA|7C": "Moreno Figo Ariyansyah Wibowo, S.Pd.",
+          "MATEMATIKA|7D": "Moreno Figo Ariyansyah Wibowo, S.Pd.",
+          "MATEMATIKA|8A": "Fitrotun Nisa, S.Pd.",
+          "MATEMATIKA|8B": "Fitrotun Nisa, S.Pd.",
+          "MATEMATIKA|8C": "Dwi Wulandari, S.Pd, Gr.",
+          "MATEMATIKA|8D": "Arief Rahman Hakim, S.Pd, Gr.",
+          "MATEMATIKA|8E": "Arief Rahman Hakim, S.Pd, Gr.",
+          "PAI|7A": "Wulan Aulia Al Azhar, S.Pd.",
+          "PAI|7B": "Wulan Aulia Al Azhar, S.Pd.",
+          "PAI|7C": "Bambang Triawan Pamungkas, S.Pd.",
+          "PAI|7D": "Bambang Triawan Pamungkas, S.Pd.",
+          "PAI|8A": "Wulan Aulia Al Azhar, S.Pd.",
+          "PAI|8B": "Wulan Aulia Al Azhar, S.Pd.",
+          "PAI|8C": "Wulan Aulia Al Azhar, S.Pd.",
+          "PAI|8D": "Bambang Triawan Pamungkas, S.Pd.",
+          "PAI|8E": "Bambang Triawan Pamungkas, S.Pd.",
+          "PJOK|7A": "Denata Novenda Afgenesya, S.Pd, Gr.",
+          "PJOK|7B": "Denata Novenda Afgenesya, S.Pd, Gr.",
+          "PJOK|7C": "Dany Maulana Rizky, S.Pd, Gr.",
+          "PJOK|7D": "Dany Maulana Rizky, S.Pd, Gr.",
+          "PJOK|8A": "Denata Novenda Afgenesya, S.Pd, Gr.",
+          "PJOK|8B": "Denata Novenda Afgenesya, S.Pd, Gr.",
+          "PJOK|8C": "Denata Novenda Afgenesya, S.Pd, Gr.",
+          "PJOK|8D": "Dany Maulana Rizky, S.Pd, Gr.",
+          "PJOK|8E": "Dany Maulana Rizky, S.Pd, Gr.",
+          "PKN|7A": "Peni, S.Pd, Gr.",
+          "PKN|7B": "Peni, S.Pd, Gr.",
+          "PKN|7C": "Ferri Kurniawan, S.Pd.",
+          "PKN|7D": "Ferri Kurniawan, S.Pd.",
+          "PKN|8A": "Peni, S.Pd, Gr.",
+          "PKN|8B": "Peni, S.Pd, Gr.",
+          "PKN|8C": "Peni, S.Pd, Gr.",
+          "PKN|8D": "Ferri Kurniawan, S.Pd.",
+          "PKN|8E": "Ferri Kurniawan, S.Pd.",
+          "SENI BUDAYA|7A": "Denata Novenda Afgenesya, S.Pd, Gr.",
+          "SENI BUDAYA|7B": "Denata Novenda Afgenesya, S.Pd, Gr.",
+          "SENI BUDAYA|7C": "Bambang Triawan Pamungkas, S.Pd.",
+          "SENI BUDAYA|7D": "Bambang Triawan Pamungkas, S.Pd.",
+          "SENI BUDAYA|8A": "Ummi Rihana, S.Pd.",
+          "SENI BUDAYA|8B": "Ummi Rihana, S.Pd.",
+          "SENI BUDAYA|8C": "Ummi Rihana, S.Pd.",
+          "SENI BUDAYA|8D": "Ahmad Taufiqurrohman",
+          "SENI BUDAYA|8E": "Ahmad Taufiqurrohman",
+        },
+      };
+      const MONTHS = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+      const DEFAULT_SIGNATURE_DATA =
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMQAAACUCAYAAADMKIacAAAZwElEQVR4nO2deVhU1/3G33vv7MzGKncQyBiNG6IRo7FqLGBBTURt3Q0aTd1qjJrk16DRGINiTJUnbrEhtqSCqFDjjsa4JW21msTGxsSYtlqNGXiAYZgZGJYZ5vv7g0i1SRUUmBnmfJ7nffQZ7tw5y33P95xzz7mXIyIwGIwGeE8ngMHwJpghGIzbYIZgMG6DGYLBuA1mCAbjNpghGIzbYIZgMG6DGcLHqaioEG02m+jpdLQXmCF8mMLCQurfv79p6tSpJk+npb3ADOGjmM1mcfHixbh+/Tr0er2nk9Nu4NjSDd/DYrGII0aMMF28eBEymQzXrl0zBAUFFXk6Xe0BiacTwGg+P//5z03nzp0DALz00ktgZmg5WITwMSZOnEj5+fkQBAGDBw/G6dOnOU+nqT3BIoQPMWPGDMrPz4dCoUBUVBTS0tI8naR2BxtU+whvvvkmFRQUQC6XIzw8HKtWrcLw4cNZdGhhWITwAd59913atGkT1Go1VCoVnn/+eYwfP56ZoRVgYwgv59ChQ7Ro0SJIpVIoFAr07t0b7733HjNDK8EihBezd+9eWrp0KUJDQ9G9e3eUlpZiw4YNBk+nqz3DxhBeysGDB2nx4sUICQlBSkoKvvrqK4wdOxY6nY5NsbYizBBeyNGjR2nZsmVQq9VITU3FmTNn8LOf/QwzZ85kXaVWhhnCyzh+/DgtXboUAQEBuHTpEqdUKhEeHo709HRmhjaADaq9iKNHj1J6ejqGDh2KjIwMDgDsdruo0WhYN6mNYIbwEsrLy8Vx48aZ+vfvjzfeeINFAw/BDOEF2O12cdy4cab4+HikpaUxM3gQZggPY7VaxdTUVFNUVBQ2b97MzOBhmCE8zNixYyk0NBRZWVnMDF4AM4QHmTNnDkmlUhYZvAg27eoh5s6dy8zghbClGx5g6dKl5HA4sH37dmYGL4MZoo1ZvHgxWSwWZgYvhXWZ2pC0tDSyWq1staoXwyJEG5Genk43btxAXl4eM4MXwyJEG5CZmUk3b95kZvABWIRoZTIyMuj8+fPYt28fM4MPwAzRiqSnp9OFCxewfft2tqnHR2CGaCVWr15NNpsNe/fuZZHBh2BjiFZg+fLl5Ha78Zvf/IaZwcdgEaKFWbp0KWm1WrZq1Udha5lakMzMTFKpVJg7dy4zg4/CukwtxGuvvUbBwcHMDD4OM0QL8PLLL5MgCJg+fTozg4/DukwPyIoVK6ioqIjtZ2gnsAjxAKxdu5asViszQzuCGeI+WbJkCclkMrz11lvMDO0I1mW6D1avXk1arRYLFixgZmhnMEM0k40bN5IgCJg/fz4zQzuE3ZhrBuvXr6fIyEhMmDCBmaGdwsYQTWTZsmWk1WqZGdo5rMvUBNasWUPh4eGYMWMGM0M7hxniHuTk5JBCoWBv7PETmCHuwv79+4nneYwaNYqZwU9ghvgfnDx5kmJjYw0hISHsydt+BJtl+hHy8/NJqVSCmcH/YLNM/8X27dvJbrezbpKfwgxxG3v27CGz2Yxnn32WmcFPYWOI78nLy6OgoCD2MnQ/h0UIAL///e8pJCSEmYHBDJGfn08ajQZJSUnMDAz/NkRubi7V1NSwm26MRvzWEBs3biSHw4Fp06YxMzAa8UtDrFu3jtxuN2bPns3MwLgDv5tlysrKorq6Ojz33HPMDIwf4Fd3qjds2EButxuLFy9mZmD8KH4TIbZu3UoymYzddGPcFb8wxDvvvENyuRzPPPMMMwPjrrT7QXVOTg7V19czMzCaRLseQ2zdupXq6uqwcOFCZgZGk2i3EWLnzp1ktVqZGRjNol2OIQoLC8lut2PixInMDIxm0e4iREFBAd24cYOZgXFftKsIsWvXLnK73ZgyZQozA+O+aDeD6pycHNLr9WynG+OBaBddpqysLOI4jpmB8cD4vCFyc3OpvLwcTz/9NDMD44HxaUOYzWbR4XCwFxwyWgyfNURFRYW4a9cuE1vCzWhJfNYQ27ZtM6Wmpho8nQ5G+8InDbFlyxbq27cvtFote5AYo0XxufsQWVlZNGHCBINer2dmYLQ4PhUh3n77bZo0aRIzA6PV8BlDZGZm0uTJkw2sm8RoTbzeEHa7XVy7di3FxMQgMDCQmYHRqnj90o1NmzaZZs+ezR5Lz2gTvHpQvW7dOpoxY4YhODiYmYHRJnhtlykjI4N69uwJZgZGW+KVESIzM5MefvhhjB49mt2FZrQpXhchsrKyKCwsjJmB4RG8yhAFBQUkl8vZylWGx/CaWaa8vDyy2+2YM2eOX5jBaq0Q6+vrAQBBQWyc5C14xRhi27ZtfvPw4WXLltKpU6dQVlYGi8UCiUQCg8GAlJQUvPrqa+0+/96Oxw2Rn59P33zzDZYtW9buLwaz2SwajUaTw+HAvHnzMGrUk7h+/TpOnTqFwsJCdOrUCenp6XjySbbzz2MQkce0b98+SktLI0+moa0VHx9PgiDQ7Nmz78j3oUMHyGiMpuDgQCosPHRfZVJWViZ6On++Lo/9sNVqFVesWHFfFe/LMpvN4pgxY0ir1VJCQgIdOnSIbDabSEQoKysVH3mkMz3+eP9mlcumTZuob9++pNPp6LXXXvO7Mm1JeazLtHnzZpo+fbpBo9H45YDy9ddfp5ycHNTV1SE8PBwRESI6deqMw4cP4t//voFf//olLFy4yMDzPOrr3ZBIBJw6ddr09ddfQyqVguM4/POf/8S5c+dw6dIlSCQSjB07Fk899RQmTZrEulz3iUcMsXHjRpo6darfL8mwWm3ivv0HTGfPnkVJaTG+vvwNyswlKCsth0YbAKlUioiICFRVVUGhUKDYVIT6+nq4XC4IgoAOHTogLi4OQ4cOxfjx4w1BQUF+XZ4tQZsbIi8vj5xOJ6ZPn85asf/CarOJx4+fNK1duxaXL1/GzJkzYTA07JLleR4dI0TwPA+VSoXBgwcb2OrflqdNDfG73/2OnE4n5s6dy8xwF6ZMmUKXL1/G3/72N1ZObUyb3anesmULXb16lZnhHtjtdvGvf/0roqOjPZ0Uv6RNDHH06FE6deoUVq9ezcxwD95//33TtWvXMGTIEE8nxS9p9S6TzWYTZ82aZdqyZYvXbvI5ceIEWSwWqNVquFwuDBw40CMDfqvVKvbs2dOk0Whw+fJl1nh4gtae1501axbl5uZ65dz4H//4Rxo2bBipVCrS6/Wk1WpJo9EQABo0aBDt3LmzTdKd/ftttHzZUupkjCadVk15O3K8srz8Qa168jlz5tCOHTu8snLXrFlDKpWKOnToQEuWLKHc3FzKz8+nTZs20YQJEygkJIQA0LRp01ot/bt27qCePboRB5BcJqEB/fvR3vf/6JXl5S9qtROvWLGCXnzxRa+s3B07dpBarabu3btTeXn5jy53MJvN4q1lFuvXr2+xfKx87VV6bv48Snv5/0iv05BOq6bRKU/Rm2vXeGVZ+Zta5aTZ2dk0adIkr63gIUOGEMdxtHv37numMSoqinr37t3svLz99tvUo0ePOyLM5k0bSCrhSasJIJ4DDU/+GZ0+dcJry8kf1eInPHHiBM2YMeN/tryeVk7OH0gul9JPf/oENeX4ceN+Tp07dyKrteIH+dm48S1asuTlH/xt3bo3KTg4kASBo/nz5zX+Tq9evYjneVKpVPT888836feZ2lYtfsJp06bR/v37vbayn312BgGg1avTm5TGrl27UFRUR7LbbY0X/dGjhRQX9ygJAkdSqUDp6SvvOFd0dCQBoMmTJzZ+npo6lfr160dz5sxpUmRi8oxa9GTr16+nN99806srOy7uUdLrtXTkyOF7pnPq1MkEgGQyCWVmriMiwvHjx6hr1y4kkfAEgAYOHHBHNFy+/BXieVBMTA+y2ayi2Vwm/vSnT9CMGdO9ulyYGtRiJ9qwYcMP1vh7ozp0CKXw8DCqqLDctUu3atXrpNdriedBcrmUsrN/R0SEPn1iCQBJJDyNHj3qjsixfft7JJdLSRA4iot7lBYuXEBGYzTNnev95cLUoBY5yb59+yguLo5KS0u9ctxwSzabTezY0UDR0ZGNexB+TBkZq0iplBPHgaRSgRYtaujvb9myieRyKQGgUaOepNu/s3LlChLFDiSVCgSAOA7Uo0c3euedrdSSeWBqXbXISRITE1t0arK1ZLNZxaAgPXXoEEo2m/VHDfHKK0soIEBJEglPPA/65S9nEhGhvNwsdu3ahQDQM8/8Z+Zo//69FBPTg+Ljh1JOzh8oI2MVDR06hJYseZnYDjbf0wOf4I03MmjRokX0oOdpK8XGxlJAQAAdP378jjRbrVbx6aefJqVSSYIgkFKppHnzGmaI8vPzKTa2oasUEhJCH374IRERli5dSlFRUTRz5kyfyT/T3fVAXzaby8RbLaivaMyYMQSA1qz5z42wXbt2Uffu3YnneZJIJMRxHBmNRsrIyKDU1FSKiIggtVpNUqmUeJ6nAQMGkNFopK5du1JmZqZP5Z/p7nqgL0+fnkp79+4hT2eiOcrLyyONRkOPPPIIHTt2jNatW0cGg4EAkCAIFBAQQBzHkVQqJbVaTUOGDKFdu3ZRaWmp+OSTT5JUKiWj0UgvvPACWa0/3u1i8l3d92rX9PSV9N133+G3v83yuVWZI0eOpNOnT0MQBNTW1sLpdKJXr16YPXs2jEYjPv30U1RVVaFLly6YNWvWHfnbvXs3JScnt8u3GNntdvHMmTOm5ORkn6vTFuN+XPTBB0do2LAEsli88270vfTCCy+QUqmkoKAg6tOnDy1fvpy19kTYunUr8TxPKSkpVFHxwzvz/qD7epRlbm4uUlJSoNf73p7ezMxMOn36NGbNmoVXX321Tfc9HDhwgFJSUry29S0uLgbHcThw4ADi4+NNH3300X09FcVms4kbNmwwOZ1O1NbWYu3atV6b5x/QXAcdPLifxoxJIU87ubkym83iiBEjaODAgXT48L3vUre0du7cSSqViqZMmeLVZffOO+/QiBEjSCKR3PcCzdTUVJJKG+7XDB482Kvz+99q9hbSgoICJCcnt4I1W4+tW7fSkCFDTEFBQThy5Ihh5MiRbd5i6fV6SKVS5OXl4fXXX/f8A3X/B7Nnz+YKCwu5hIQEhIaG3tc51Go1AgIC8NJLL6GwsNDQwklsXZrjnj17CigpaZjPOP7gwYOUlJREycnJXrFRadmyZSSXy0mlUrXZbjxPyVfHIM06eOTI4fTKK0u8viItFou4YMEC6tmzJ/3qV7+66zKNtlZqaiqpVCpSKBT07rvven1Z+puafOCJEycoJeUpr6/A9PR0ioqKov79+9OBAwe8Mr1z586lgIAAkkqlNH36dDKbzV5jWH9Xkw+cP3/+j0aHsrIy8cCBA1RYWPiDv7WlCgoKqEuXLhQSEkIrV670aFqaoszMTIqMjCSJREJdunShzZs3e32a/UFNPrBPnz5UVtawmtVms4qLFj1PP/nJ4zRiRDKtWrXKYwvZbDabmJKSQmFhYTRixAifmj+3WCzi8OHDSRAEkslklJiYSPv27SNPp8uf1aSDSktLxcjISFq9Op3mz59HDz0URYmJ8R5f2vzWW29RbGws9evXj7Kzsz2algdRdnY2xcbGEs/zJAgCjRs3jo4dO+az+fFlNemgjRs3kl6vJ6VSTlFRHRt3j3lKe/fupYEDB1L37t0pIyPDo2lpSWVmZlJcXBwBIJVKRePHj6eCgoJ2kz9fUJMOmj9/PgGg8PAwOnrUc2OFI0eO0PTpqdStWzeaN2+OT3WPmqMtW7ZQQkICKRQKkkqlFBMTS2lpabRnj28tpPRFNemgpKQk4jiOnnvuOY9USGFhIU2cOJEeeyyO5v1qFp0+fdIvLowPPzxBv/zlbIqK7ERAQ3eqZ8/utHDhAjp8+KBflEFb654HWK1W8dbjU7Zt29amlfDBBx/QxIkTKTIykkaNGuW305M2q13Mzc2jCRMm0MMPGxsffDBo0EBKS/s17d+/16vutfiy7rn82263izExMaabN28iOzsb06ZNa/VlD3v27KH33nsPn376KeLj4zF69GhMnDjRdxaItSI2m03Mz883nTt3DmfPnsU//vGPxrcJ9e/fH48++ihiY2PhieUp7YEm7Yd49tlnKTs7G8OHD0dhYWGrFPSxY8fo/fffx8mTJ1FdXY0nnngC48ePx5gxY1jF3oVDhw7RqVOn8MUXX+Dvf/87qqur4XQ6odVqERERgaioKMTExKBXr15ISEjw2iewewtNMoTNZhOTkpJMn3zyCSZMmICdO3e22EW6detW2rlzJy5evAij0YjBgwdj5cqVfv/+ufvBbreLHxw5avrqq69w/fp1/Otf/8LVq1dhNptRU1MDrU4Ng8GAbt26oWvXrjAajYiOjsbAnwwyaDRaVt5oxvshDh8+TC+++CKuXbsGo9GIFStWYPLkyc02htVqFc+cOWPavXs3/vKXv0Cn0yEmJgaJiYkYPXq0QatlFdPSfHTqNH3zzTf4+E+nceXKFVy9ehW1tbXguIbqU6lUCAwMhFwuR8eOHdGpUyfo9XoEBwcjIiICWq0WcrkcffvGGXiBR0BA+31zbLO2kJaVlYmJiYmmr7/+GnV1dZg3bx6SkpLwxBNP3PUNmDt27KDPPvsMn3/+Ob788ksoFAp06tQJycnJSEtLY12iNqbSbhfPnv2Lqbi4GGazGSUlJTCbzSguLobJZILNZkNpaSlsNhuIACIgODgQCoUMSqUS0dHRiIyMREBAAPR6PTp0EKFWq6HX66HRaNC372MGQRCg1fle43Zfe6oXLFhAhw8fxrVr1yCRSBAWFoYuXbrAaDSipqYGMpkMMpkM3333Hb744guYzWaoVCokJCSgb9++GDBgAOLj45kRvJjjH35Aly5dgslkgtlsRmBgIGpqHPj2229RUVGByspKFBUVobKyEjwvgdPpBM/z0Ol0kMuUcLvdUKlUCA0NhVKphNPphFypQMeOHREWFgaFQgGpVAqJRIKgoCAYDAbExcUZOI5rjFxAwyzorc9ufd5wydJ//dvwf7ebcP78JyaHwwGXywWFQgGdToc+fXobAgPvvQ/+vh8yYLVaxaysLNOFCxdw+fJlXL58GS6XCwDgdrshkUjgcrkQGRmJmTNnYvHixQadTudzLUZ7orLSLqrVP+zu2GxWUattqBuLpVw8UnjYZLVaYbFYIJPJcP36ddy4cQMqlQIdOnRAcHAwLl68iC+//BJVVVUoL68Ax3Gora2F2+0GuTnwPA8igpvcAAAOHNwg8DwPt9sNQRAgk8lARFAoFAgKCoJWq4UgCOA4Di6XCzU1NXC5XOA4DoIgQKkMaPy8trYWACAIAgCgvr4eRITKykrU1NQ0fuZ0OiGRSKBSqZCS8hS2b99+14a4xd4xd/LkSbLZbDh//jzOnj2LmzdvoqSkBFqtFomJiejVqxd69uyJ4cOHs8hwF+x2m3jhb5+YHu3Tz3DrIjWby8QjRw+ZdBotAODq1auw2+3gOA4WiwXffvstevTogbq6OpSWluKhhx6CTCZDSUkJrly5AqvVCpfLBZlMAZlMhtraWkRGRqJHjx4oKiqCyWTCww8/DCLCxYsXGyO8UqlEVVUVLBYLpFIpwsJCQEQQRRFKpRIOhwMlJSUoLi6BUqlESEgItFotwkLDERwcDJ7nYbPZUFZWhqqqKgSHhkCpVEKhUECtVkOn00EikUAqlWLAgAGNO+uICJ999pmpuroatbW1jRc7xwkgIjidzsbGVyJpeCzArRfaV1dXw+FwoKqqCmVlZTCbzaitrYVEIsHTT0/BL37xi7YxxI+Rk5NDn3/+OcrKynDz5k1cvXoVDocD0dHRUCqV0Gq10Ol0cLvd6Ny5M0JCQhAeHo5hw4YZvq8cU+/evQ08z3/fcgAPOhtS7bCJBECluvM8NdV2UaH8T+tprSgT//HN3009Yx4zAEC9242zZ/5s6tfvcQMv8Pjzn06btFotHu3b3+ByOXHsg0KTIAgICgpCRUUFHA4HAgMDYTabv29dA6DW6GC32+F0OlFUVIQrV67A5XIhNDQUUqm0sbLdbjeUSmVji0dEEAQB1/99FSUlJRAEASEhIdBoNDAajY2fDR06tLGVdTgcsFqtkEql6Nq1K27cuIGamjpoNBoQEZRKJUaOfMoglTX8rlarKyovN4sN4wX/neFr0xe3l5eXi/n5+Sa5XI5r167h0qVLqKqqwvXr11FfXw+JRIK6uoZK43keLpcLbndDyA0JCUJx0Xd45JEuUCgUqK6uhlQqhcPhgNlsBsdxiIqKgiqgIaw7HA4AQHGxCVKpHPX1TmhUASgtLYVSqUTnzp0RGhqK+vp62O122O12qNVq8DyPmzdv4sKFC1AqlejWrRuqqqpQXFwMZz2H4OBguN0Eq7UCcrkCgsDDYIiA3d4wAJVKJbBabSgvNwPg4HbXQy5XICwsDAQe1dXVUKlUqKqqAhFh2LBhiIiIwMcffwy9Xo/BgwcjPj7B4HLV489//tjEcRwGDRpi0Ov1ReXlZvGT82dNj/UfaJAIAjieg0bDuqEtSZsaoqnYbDbxo48+MrlcLuj1ethsNlgsFtitlaisrPzePA3PRyAi1NTUoKqqCjqdDvZKKziOQ2VlZeNAUCqVw+FwICw0HDabDQqFAqIoQq/XIyAgAEqlsrHPeyvEV1RUIDw8HAaDARaLBZWVlQgOCYRSKUdtrROCwIGIQ3l5GUaNGmvQ6nRFVmuFyHMcPvvsU5PTWYsBjw8y8BwH9/ctsIeLldEEvNIQDIanaPZjaBiM9gwzBINxG8wQDMZtMEMwGLfBDMFg3AYzBINxG8wQDMZt/D+22YGauqiRswAAAABJRU5ErkJggg==";
+      const SIGNATURE_KEY = "rapot_asas_signature_kepala";
+      const MAPEL_40 = ["MATEMATIKA", "IPA"];
+      const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxNDkVveCLsk7Gd8-4lxybxgm6vOfobOkKEYdvypIe3V--oFO_3DPtdZxvZoJjhw4p35Q/exec";
+      function $(id) {
+        return document.getElementById(id);
+      }
+      function opt(select, values, placeholder) {
+        select.innerHTML = `<option value="">${placeholder}</option>`;
+        values.forEach((v) => {
+          const o = document.createElement("option");
+          o.value = v;
+          o.textContent = v;
+          select.appendChild(o);
+        });
+      }
+      function init() {
+        opt($("korektor"), DATA.guru, "-- Pilih Korektor --");
+        opt($("kelas"), DATA.kelas, "-- Pilih Kelas --");
+        opt($("mapel"), DATA.mapel, "-- Pilih Mapel --");
+        ["korektor", "kelas", "mapel"].forEach((id) =>
+          $(id).addEventListener("change", tampilkanTabel),
+        );
+        tampilkanTabel();
+        updateTtdStatus();
+      }
+      function pengampu(mapel, kelas) {
+        return DATA.pengampu[`${mapel}|${kelas}`] || "-";
+      }
+      function skema(mapel) {
+        return MAPEL_40.includes(mapel)
+          ? { maxUmum: 25, maxPremis: 10, pembagi: 35 }
+          : { maxUmum: 30, maxPremis: 10, pembagi: 40 };
+      }
+      function rumusHTML(mapel) {
+        if (!mapel) {
+          return `<div class="formula-title">Rumus Nilai Akhir</div>
+      <div class="formula-vertical"><div>Pilih kelas dan mata pelajaran terlebih dahulu.</div></div>`;
+        }
+        const s = skema(mapel);
+        return `<div class="formula-title">Rumus Nilai Akhir ${mapel}</div>
+    <div class="formula-vertical">
+      <div>Nilai Akhir</div>
+      <div>=</div>
+      <div>(Skor Umum + Skor Cek Premis)</div>
+      <div>÷ ${s.pembagi}</div>
+      <div>× 100</div>
+    </div>
+    <div class="formula-small">Skor Umum maksimal ${s.maxUmum}. Skor Cek Premis maksimal ${s.maxPremis}. Pembagi ${s.pembagi}.</div>`;
+      }
+      function rumusPrintHTML(mapel) {
+        const s = skema(mapel);
+        return `<div class="print-formula">
+    <div class="print-formula-title">Rumus Nilai Akhir</div>
+    <div>Nilai Akhir</div>
+    <div>=</div>
+    <div>(Skor Umum + Skor Cek Premis)</div>
+    <div>÷ ${s.pembagi}</div>
+    <div>× 100</div>
+    <div>Skor Umum maksimal ${s.maxUmum}, Cek Premis maksimal ${s.maxPremis}</div>
+  </div>`;
+      }
+      function key(
+        kelas = $("kelas").value,
+        mapel = $("mapel").value,
+        korektor = $("korektor").value,
+      ) {
+        return "rapot_asas_v3|" + korektor + "|" + mapel + "|" + kelas;
+      }
+      function safeNum(v) {
+        const n = Number(v);
+        return isNaN(n) ? 0 : n;
+      }
+      function tampilkanTabel() {
+        const kelas = $("kelas").value,
+          mapel = $("mapel").value,
+          korektor = $("korektor").value;
+        $("pengampu").value = mapel && kelas ? pengampu(mapel, kelas) : "";
+        const tbody = $("tbodyInput");
+        tbody.innerHTML = "";
+        if (!kelas || !mapel || !korektor) {
+          $("statusInput").textContent =
+            "Pilih korektor, kelas, dan mata pelajaran terlebih dahulu.";
+          $("screenSignatures").innerHTML = "";
+          updateTtdStatus();
+          return;
+        }
+        const s = skema(mapel);
+        $("statusInput").innerHTML =
+          `Kelas <b>${kelas}</b><br>Mapel <b>${mapel}</b><br>Guru Pengampu <b>${pengampu(mapel, kelas)}</b><br>Skor Umum 0-${s.maxUmum}<br>Skor Cek Premis 0-10`;
+        DATA.siswa[kelas].forEach((nama, i) => {
+          tbody.insertAdjacentHTML(
+            "beforeend",
+            `
+      <tr>
+        <td class="center">${i + 1}</td>
+        <td class="name">${nama}</td>
+        <td><input type="number" min="0" max="${s.maxUmum}" step="1" data-i="${i}" data-field="umum" oninput="validasiHitung(this)"></td>
+        <td><input type="number" min="0" max="10" step="0.01" data-i="${i}" data-field="premis" oninput="validasiHitung(this)"></td>
+        <td class="center akhir" data-i="${i}">0</td>
+      </tr>`,
+          );
+        });
+        loadData(false);
+        hitungSemua();
+        updateScreenSignatures();
+      }
+
+      function getKepalaTandaTangan() {
+        return DEFAULT_SIGNATURE_DATA;
+      }
+      function korektorSignatureKey(korektor = $("korektor").value) {
+        return "rapot_asas_signature_korektor|" + korektor;
+      }
+      function getKorektorTandaTangan(korektor = $("korektor").value) {
+        if (!korektor) return "";
+        return localStorage.getItem(korektorSignatureKey(korektor)) || "";
+      }
+      function imgKepalaTandaTanganHTML() {
+        return `<img class="signature-img" src="${getKepalaTandaTangan()}" alt="Tanda tangan Kepala Sekolah">`;
+      }
+      function imgKorektorTandaTanganHTML(korektor = $("korektor").value) {
+        const src = getKorektorTandaTangan(korektor);
+        return src
+          ? `<img class="signature-img" src="${src}" alt="Tanda tangan Korektor">`
+          : `<div class="sig-space"></div>`;
+      }
+      function updateTtdStatus() {
+        const box = $("ttdStatus");
+        if (!box) return;
+        const korektor = $("korektor").value;
+        const korektorSrc = getKorektorTandaTangan(korektor);
+        box.innerHTML = `
+    <div><b>Tanda tangan aktif</b></div>
+    <div style="margin-top:8px; display:grid; grid-template-columns:repeat(2, minmax(180px, 1fr)); gap:12px; align-items:start;">
+      <div>
+        <div>Tanda tangan kepala sekolah : <b>ok</b></div>
+      </div>
+      <div>
+        <div>Korektor: ${korektor ? `<b>${korektor}</b>` : `<b>pilih korektor dahulu</b>`}</div>
+        ${korektorSrc ? `<img class="signature-preview" src="${korektorSrc}" alt="Preview tanda tangan Korektor">` : `<div style="margin-top:8px; color:#6b7280;">Belum ada tanda tangan korektor.</div>`}
+      </div>
+    </div>
+    <div class="ttd-actions">
+      <button class="btn-text-green" onclick="openSignaturePopup()">Upload Tanda Tangan</button>
+      <button class="btn-text-red" onclick="hapusTandaTanganKorektor()">Hapus Tanda Tangan</button>
+    </div>
+  `;
+      }
+      function updateScreenSignatures() {
+        const box = $("screenSignatures");
+        if (!box) return;
+        const korektor = $("korektor").value;
+        if (!korektor) {
+          box.innerHTML = "";
+          return;
+        }
+        box.innerHTML = `
+    <div class="hint ttd-status-box">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:26mm; align-items:start;">
+        <div>
+          <div><b>Kepala Sekolah</b></div>
+          <div>${DATA.kepalaJabatan}</div>
+          <div style="margin-top:26mm; font-weight:bold; text-decoration:underline; color:#142018;">${DATA.kepalaNama}</div>
+        </div>
+        <div>
+          <div><b>${tanggalCetak()}</b></div>
+          <div>Korektor</div>
+          <div style="margin-top:26mm; font-weight:bold; text-decoration:underline; color:#142018;">${korektor}</div>
+        </div>
+      </div>
+    </div>
+  `;
+      }
+      let signaturePadReady = false;
+      let signatureDrawing = false;
+      let signatureHasInk = false;
+      function setupSignaturePad() {
+        const canvas = $("signatureCanvas");
+        if (!canvas || signaturePadReady) return;
+        const ctx = canvas.getContext("2d");
+        function resizeCanvas() {
+          const rect = canvas.getBoundingClientRect();
+          const ratio = window.devicePixelRatio || 1;
+          const saved = canvas.toDataURL("image/png");
+          canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+          canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+          ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+          ctx.lineWidth = 2.3;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+          ctx.strokeStyle = "#111111";
+        }
+        function pos(e) {
+          const rect = canvas.getBoundingClientRect();
+          const touch = e.touches && e.touches[0] ? e.touches[0] : e;
+          return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+        }
+        function startDraw(e) {
+          e.preventDefault();
+          signatureDrawing = true;
+          signatureHasInk = true;
+          const p = pos(e);
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+        }
+        function draw(e) {
+          if (!signatureDrawing) return;
+          e.preventDefault();
+          const p = pos(e);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        }
+        function stopDraw() {
+          signatureDrawing = false;
+        }
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+        canvas.addEventListener("mousedown", startDraw);
+        canvas.addEventListener("mousemove", draw);
+        window.addEventListener("mouseup", stopDraw);
+        canvas.addEventListener("touchstart", startDraw, { passive: false });
+        canvas.addEventListener("touchmove", draw, { passive: false });
+        window.addEventListener("touchend", stopDraw);
+        signaturePadReady = true;
+      }
+      function openSignaturePopup() {
+        const korektor = $("korektor").value;
+        if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+        $("signatureModal").classList.add("show");
+        setTimeout(() => {
+          setupSignaturePad();
+          clearSignaturePad(false);
+        }, 80);
+      }
+      function closeSignaturePopup(e) {
+        if (e && e.target.id !== "signatureModal") return;
+        $("signatureModal").classList.remove("show");
+      }
+      function triggerSignatureImageUpload() {
+        const korektor = $("korektor").value;
+        if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+        const input = $("signatureImageInput");
+        if (input) input.click();
+      }
+      function uploadSignatureImage(event) {
+        const korektor = $("korektor").value;
+        const file = event.target.files && event.target.files[0];
+        if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+        if (!file) return;
+        if (!file.type.startsWith("image/"))
+          return alert("File harus berupa gambar.");
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          localStorage.setItem(korektorSignatureKey(korektor), e.target.result);
+          signatureHasInk = false;
+          updateTtdStatus();
+          updateScreenSignatures();
+          closeSignaturePopup();
+          alert("Gambar tanda tangan korektor berhasil diunggah dan disimpan.");
+          event.target.value = "";
+        };
+        reader.readAsDataURL(file);
+      }
+      function clearSignaturePad(showAlert = true) {
+        const canvas = $("signatureCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        signatureHasInk = false;
+        if (showAlert) alert("Area tanda tangan sudah dibersihkan.");
+      }
+      function saveSignaturePad() {
+        const korektor = $("korektor").value;
+        const canvas = $("signatureCanvas");
+        if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+        if (!signatureHasInk) return alert("Tanda tangan masih kosong.");
+        localStorage.setItem(
+          korektorSignatureKey(korektor),
+          canvas.toDataURL("image/png"),
+        );
+        updateTtdStatus();
+        updateScreenSignatures();
+        closeSignaturePopup();
+        alert("Tanda tangan korektor berhasil disimpan.");
+      }
+      function hapusTandaTanganKorektor() {
+        const korektor = $("korektor").value;
+        if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+        localStorage.removeItem(korektorSignatureKey(korektor));
+        updateTtdStatus();
+        updateScreenSignatures();
+        alert("Tanda tangan korektor sudah dihapus.");
+      }
+
+      function validasiHitung(el) {
+        if (el.dataset.field === "umum") {
+          el.value = el.value.replace(/[^0-9]/g, "");
+        }
+        hitungSemua();
+      }
+      function hitungSemua() {
+        const mapel = $("mapel").value;
+        if (!mapel) return;
+        const s = skema(mapel);
+        document.querySelectorAll("#tbodyInput tr").forEach((tr) => {
+          const elUmum = tr.querySelector('[data-field="umum"]');
+          const elPremis = tr.querySelector('[data-field="premis"]');
+
+          const umum = safeNum(elUmum.value);
+          const premis = safeNum(elPremis.value);
+
+          // Validasi Visual
+          if (elUmum.value !== "" && umum > s.maxUmum)
+            elUmum.classList.add("input-error");
+          else elUmum.classList.remove("input-error");
+
+          if (elPremis.value !== "" && premis > 10)
+            elPremis.classList.add("input-error");
+          else elPremis.classList.remove("input-error");
+
+          tr.querySelector(".akhir").textContent = (
+            ((umum + premis) / s.pembagi) *
+            100
+          ).toFixed(2);
+        });
+      }
+      function ambilDataInput() {
+        const arr = [];
+        document.querySelectorAll("#tbodyInput tr").forEach((tr, i) => {
+          arr.push({
+            nama: DATA.siswa[$("kelas").value][i],
+            umum: tr.querySelector('[data-field="umum"]').value || "",
+            premis: tr.querySelector('[data-field="premis"]').value || "",
+            akhir: tr.querySelector(".akhir").textContent || "0",
+          });
+        });
+        return arr;
+      }
+
+      function namaKorektorPendek(namaLengkap) {
+        const tanpaGelar = String(namaLengkap || "")
+          .split(",")[0]
+          .replace(/\b(S\.?Pd|Gr|M\.?Pd|S\.?Si|S\.?E|Lc|Drs?|M\.?Si)\b\.?/gi, "")
+          .replace(/\s+/g, " ")
+          .trim();
+        return tanpaGelar.split(" ").filter(Boolean).slice(0, 2).join(" ");
+      }
+
+      function namaMapelFile(mapel) {
+        const upper = String(mapel || "").toUpperCase().trim();
+        const tetapKapital = ["IPA", "IPS", "PAI", "PKN", "PJOK", "TIK"];
+        if (tetapKapital.includes(upper)) return upper;
+        if (upper === "INFORMATIKA") return "TIK";
+        return upper
+          .toLowerCase()
+          .split(" ")
+          .map((kata) => kata.charAt(0).toUpperCase() + kata.slice(1))
+          .join(" ");
+      }
+
+      function namaFileDasar(mapel, kelas, korektor) {
+        return `${namaMapelFile(mapel)}_${kelas}_${namaKorektorPendek(korektor)}`.replace(/[\\/:*?"<>|]/g, "_");
+      }
+
+      function arrayBufferToBase64(buffer) {
+        let binary = "";
+        const bytes = new Uint8Array(buffer);
+        const chunkSize = 0x8000;
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+          const chunk = bytes.subarray(i, i + chunkSize);
+          binary += String.fromCharCode.apply(null, chunk);
+        }
+        return btoa(binary);
+      }
+
+      function dataRowsUntukDatabase(kelas, mapel, korektor) {
+        const guru = pengampu(mapel, kelas);
+        return dataKelasUntukCetak(kelas, mapel, korektor).map((r) => ({
+          jenjang: "SMP",
+          kelas,
+          namaSiswa: r.nama,
+          mapel,
+          skorUmum: r.umum ?? "",
+          cekPremis: r.premis ?? "",
+          nilaiAkhir: r.akhir ?? "0",
+          korektor,
+          guruPengampu: guru,
+        }));
+      }
+
+      async function buatBufferExcel(korektor, selected) {
+        if (typeof ExcelJS === "undefined") throw new Error("Library Excel belum termuat. Pastikan perangkat terhubung internet, lalu coba lagi.");
+
+        const wb = new ExcelJS.Workbook();
+        wb.creator = "Aplikasi Nilai ASAS SMP Islam Nailul Falaah";
+        wb.created = new Date();
+
+        const kepalaSignatureSrc = getKepalaTandaTangan();
+        const korektorSignatureSrc = getKorektorTandaTangan(korektor);
+        const kepalaSignatureId = wb.addImage({
+          buffer: base64ToArrayBuffer(kepalaSignatureSrc),
+          extension: "png",
+        });
+        const korektorSignatureId = korektorSignatureSrc
+          ? wb.addImage({ buffer: base64ToArrayBuffer(korektorSignatureSrc), extension: "png" })
+          : null;
+
+        selected.forEach((val) => {
+          const [mapel, kelas] = val.split("|");
+          const guru = pengampu(mapel, kelas);
+          const data = dataKelasUntukCetak(kelas, mapel, korektor);
+          const ws = wb.addWorksheet(namaSheetAman(`${kelas} ${mapel}`), {
+            pageSetup: {
+              paperSize: 9,
+              orientation: "portrait",
+              fitToPage: true,
+              fitToWidth: 1,
+              fitToHeight: 0,
+              margins: { left: 0.55, right: 0.25, top: 0.35, bottom: 0.35, header: 0.2, footer: 0.2 },
+            },
+          });
+
+          ws.columns = [
+            { width: 7 }, { width: 42 }, { width: 15 }, { width: 18 }, { width: 16 }, { width: 12 }, { width: 12 },
+          ];
+
+          ws.mergeCells("A1:E1");
+          ws.getCell("A1").value = "Nilai Asli Asesmen Sumatif Akhir Semester Genap";
+          ws.mergeCells("A2:E2");
+          ws.getCell("A2").value = "SMP Islam Nailul Falaah Tahun 2025/2026";
+          [["A4:B4", "C4:E4", "Korektor", korektor], ["A5:B5", "C5:E5", "Kelas", kelas], ["A6:B6", "C6:E6", "Mata Pelajaran", mapel], ["A7:B7", "C7:E7", "Guru Pengampu Mapel", guru]].forEach(([m1, m2, l, v], idx) => {
+            ws.mergeCells(m1); ws.mergeCells(m2);
+            ws.getCell(`A${4 + idx}`).value = l;
+            ws.getCell(`C${4 + idx}`).value = v;
+          });
+          ws.addRow([]);
+          ws.getRow(9).values = ["No", "Nama Peserta Didik", "Skor Umum", "Skor Cek\nPremis", "Nilai Akhir"];
+          data.forEach((r, i) => ws.addRow([i + 1, r.nama, r.umum ?? "", r.premis ?? "", r.akhir ?? "0"]));
+
+          const signBlankRow = 10 + data.length;
+          const signDateRow = signBlankRow + 1;
+          const signTitleRow = signBlankRow + 2;
+          const signNameRow = signBlankRow + 8;
+          while (ws.rowCount < signNameRow) ws.addRow([]);
+          ws.mergeCells(`D${signDateRow}:G${signDateRow}`);
+          ws.getCell(`D${signDateRow}`).value = tanggalCetak();
+          ws.mergeCells(`A${signTitleRow}:B${signTitleRow}`);
+          ws.getCell(`A${signTitleRow}`).value = DATA.kepalaJabatan;
+          ws.mergeCells(`D${signTitleRow}:G${signTitleRow}`);
+          ws.getCell(`D${signTitleRow}`).value = "Korektor";
+          ws.mergeCells(`A${signNameRow}:B${signNameRow}`);
+          ws.getCell(`A${signNameRow}`).value = DATA.kepalaNama;
+          ws.mergeCells(`D${signNameRow}:G${signNameRow}`);
+          ws.getCell(`D${signNameRow}`).value = korektor;
+
+          ws.addImage(kepalaSignatureId, { tl: { col: 0.05, row: signTitleRow + 0.1 }, ext: { width: 220, height: 92 }, editAs: "oneCell" });
+          if (korektorSignatureId !== null) ws.addImage(korektorSignatureId, { tl: { col: 3.05, row: signTitleRow + 0.1 }, ext: { width: 220, height: 92 }, editAs: "oneCell" });
+
+          for (let r = 1; r <= Math.max(ws.rowCount, 54); r++) {
+            const row = ws.getRow(r);
+            if (r <= 2) row.height = 24;
+            else if (r === 8) row.height = 17;
+            else if (r >= 4 && r <= 7) row.height = 22;
+            else if (r === 9) row.height = 31;
+            else if (r > 9 && r < signBlankRow) row.height = 21;
+            else if (r > signTitleRow && r < signNameRow) row.height = 25;
+            else row.height = 21;
+          }
+
+          ws.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+            row.eachCell({ includeEmpty: true }, (cell) => {
+              cell.font = { name: rowNumber <= 2 ? "Times New Roman" : "Arial", size: rowNumber <= 2 ? 16 : 12, bold: rowNumber <= 2 };
+              cell.alignment = { vertical: "middle", horizontal: rowNumber <= 2 ? "center" : "left", wrapText: true };
+            });
+          });
+          for (let r = 4; r <= 7; r++) ws.getCell(`A${r}`).font = { name: "Arial", size: 12, bold: true };
+          ["A9", "B9", "C9", "D9", "E9"].forEach((addr) => {
+            const c = ws.getCell(addr);
+            c.font = { name: "Arial", size: 12, bold: true, color: { argb: "FFFFFFFF" } };
+            c.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF198754" } };
+            c.alignment = { horizontal: "center", vertical: "middle", wrapText: true };
+          });
+          const border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+          for (let r = 9; r < signBlankRow; r++) {
+            for (let c = 1; c <= 5; c++) {
+              const cell = ws.getRow(r).getCell(c);
+              cell.border = border;
+              cell.alignment = { horizontal: c === 2 ? "left" : "center", vertical: "middle", wrapText: true };
+            }
+          }
+          [ws.getCell(`A${signNameRow}`), ws.getCell(`D${signNameRow}`)].forEach((c) => {
+            c.font = { name: "Arial", size: 12, bold: true, underline: true };
+          });
+        });
+        return await wb.xlsx.writeBuffer();
+      }
+
+      async function kirimData() {
+        const korektor = $("korektor").value;
+        const kelas = $("kelas").value;
+        const mapel = $("mapel").value;
+        if (!korektor || !kelas || !mapel) return alert("Pilih korektor, kelas, dan mapel dulu.");
+        if (!getKorektorTandaTangan(korektor)) return alert("Tanda tangan korektor wajib diisi sebelum kirim data.");
+        if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.includes("PASTE_URL")) return alert("URL Apps Script belum dipasang di HTML. Deploy Apps Script dulu, lalu masukkan URL Web App ke GAS_WEB_APP_URL.");
+
+        try {
+          hitungSemua();
+          localStorage.setItem(key(), JSON.stringify(ambilDataInput()));
+          const fileNameBase = namaFileDasar(mapel, kelas, korektor);
+          const buffer = await buatBufferExcel(korektor, [`${mapel}|${kelas}`]);
+          const payload = {
+            action: "kirimNilaiSmp",
+            jenjang: "SMP",
+            kelas,
+            mapel,
+            korektor,
+            guruPengampu: pengampu(mapel, kelas),
+            fileNameBase,
+            excelBase64: arrayBufferToBase64(buffer),
+            rows: dataRowsUntukDatabase(kelas, mapel, korektor),
+          };
+
+          await fetch(GAS_WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload),
+          });
+          alert(`Data dikirim. Cek folder Drive ${namaMapelFile(mapel)}.\nNama file dasar: ${fileNameBase}.xlsx`);
+        } catch (err) {
+          console.error(err);
+          alert("Gagal mengirim data: " + (err.message || err));
+        }
+      }
+
+      function saveData() {
+        if (!$("korektor").value || !$("kelas").value || !$("mapel").value)
+          return alert("Pilih korektor, kelas, dan mapel dulu.");
+        hitungSemua();
+        localStorage.setItem(key(), JSON.stringify(ambilDataInput()));
+        alert("Data berhasil disimpan di browser ini.");
+      }
+      function loadData(showAlert = true) {
+        const raw = localStorage.getItem(key());
+        if (!raw) {
+          if (showAlert) alert("Belum ada data tersimpan untuk pilihan ini.");
+          return;
+        }
+        const arr = JSON.parse(raw);
+        document.querySelectorAll("#tbodyInput tr").forEach((tr, i) => {
+          if (arr[i]) {
+            tr.querySelector('[data-field="umum"]').value = arr[i].umum ?? "";
+            tr.querySelector('[data-field="premis"]').value =
+              arr[i].premis ?? "";
+          }
+        });
+        hitungSemua();
+        if (showAlert) alert("Data tersimpan berhasil dimuat.");
+      }
+      function resetNilai() {
+        document
+          .querySelectorAll("#tbodyInput input")
+          .forEach((i) => (i.value = ""));
+        hitungSemua();
+      }
+      function tanggalCetak() {
+        const d = new Date();
+        return `Malang, ${d.getDate()} ${MONTHS[d.getMonth()]} 2026`;
+      }
+      function dataKelasUntukCetak(kelas, mapel, korektor) {
+        const raw = localStorage.getItem(key(kelas, mapel, korektor));
+        if (raw) return JSON.parse(raw);
+        if (
+          kelas === $("kelas").value &&
+          mapel === $("mapel").value &&
+          korektor === $("korektor").value
+        )
+          return ambilDataInput();
+        return DATA.siswa[kelas].map((nama) => ({
+          nama,
+          umum: "",
+          premis: "",
+          akhir: "0",
+        }));
+      }
+      function pageHTML(kelas, mapel, korektor) {
+        const guru = pengampu(mapel, kelas);
+        const rows = dataKelasUntukCetak(kelas, mapel, korektor)
+          .map(
+            (r, i) => `
+    <tr><td class="no">${i + 1}</td><td class="name">${r.nama}</td><td class="score">${r.umum ?? ""}</td><td class="score">${r.premis ?? ""}</td><td class="score">${r.akhir ?? "0"}</td></tr>`,
+          )
+          .join("");
+        return `<div class="print-page">
+    <div class="print-title">Nilai Asli Asesmen Sumatif Akhir Semester Genap<br>SMP Islam Nailul Falaah Tahun 2025/2026</div>
+    <div class="meta">
+      <div><span>Korektor</span><span>:</span><span>${korektor}</span></div>
+      <div><span>Kelas</span><span>:</span><span>${kelas}</span></div>
+      <div><span>Mata Pelajaran</span><span>:</span><span>${mapel}</span></div>
+      <div><span>Guru Pengampu Mapel</span><span>:</span><span>${guru}</span></div>
+    </div>
+    <table class="nilai-table">
+      <thead><tr><th>No</th><th>Nama Peserta Didik</th><th>Skor Umum</th><th>Skor Cek Premis</th><th>Nilai Akhir</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="signatures">
+      <div class="sig">
+        <div style="height: 1.5em; margin-bottom: 3px;"></div>
+        <div>${DATA.kepalaJabatan}</div>
+        ${imgKepalaTandaTanganHTML()}
+        <div class="sig-name">${DATA.kepalaNama}</div>
+      </div>
+      <div class="sig">
+        <div style="margin-bottom: 3px;">${tanggalCetak()}</div>
+        <div>Korektor</div>
+        ${imgKorektorTandaTanganHTML(korektor)}
+        <div class="sig-name">${korektor}</div>
+      </div>
+    </div>
+  </div>`;
+      }
+      function adaDataTersimpan(kelas, mapel, korektor) {
+        const raw = localStorage.getItem(key(kelas, mapel, korektor));
+        if (!raw) return false;
+        try {
+          const arr = JSON.parse(raw);
+          return (
+            Array.isArray(arr) &&
+            arr.some(
+              (r) =>
+                String(r.umum ?? "").trim() !== "" ||
+                String(r.premis ?? "").trim() !== "",
+            )
+          );
+        } catch (e) {
+          return false;
+        }
+      }
+      function renderBatchKelas() {
+        const korektor = $("korektor").value;
+        const box = $("batchKelas");
+        box.innerHTML = "";
+        if (!korektor) return;
+
+        let found = 0;
+        DATA.mapel.forEach((m) => {
+          DATA.kelas.forEach((k) => {
+            const saved = adaDataTersimpan(k, m, korektor);
+            if (saved) {
+              found++;
+              box.insertAdjacentHTML(
+                "beforeend",
+                `
+          <label style="display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:8px;">
+            <div style="display:flex; gap:8px; align-items:center; width:100%;">
+              <input type="checkbox" value="${m}|${k}" checked>
+              <span style="font-size:14px;">Kelas <b>${k}</b></span>
+            </div>
+            <div style="font-size:11px; color:#198754; margin-left:24px; font-weight:bold; line-height:1.2;">${m}</div>
+          </label>`,
+              );
+            }
+          });
+        });
+
+        if (found === 0) {
+          box.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #666;">Belum ada data yang disimpan untuk korektor ini.</div>`;
+        }
+      }
+      function openDownloadPopup() {
+        const korektor = $("korektor").value;
+        const info = $("downloadInfo");
+        renderBatchKelas();
+        if (!korektor) {
+          info.innerHTML =
+            "Pilih <b>korektor</b> terlebih dahulu di menu utama sebelum unduh PDF.";
+        } else {
+          info.innerHTML = `Korektor: <b>${korektor}</b><br>Menampilkan semua data Mapel & Kelas yang sudah tersimpan untuk korektor ini.`;
+        }
+        $("downloadModal").classList.add("show");
+      }
+      function closeDownloadPopup(e) {
+        if (e && e.target.id !== "downloadModal") return;
+        $("downloadModal").classList.remove("show");
+      }
+      function pilihSemuaKelas(status) {
+        document
+          .querySelectorAll("#batchKelas input[type='checkbox']")
+          .forEach((i) => (i.checked = status));
+      }
+
+      function resetSemuaDataUnduhan() {
+        const yakin = confirm(
+          "Yakin ingin menghapus semua data nilai yang tersimpan di browser ini? Tindakan ini tidak bisa dibatalkan.",
+        );
+        if (!yakin) return;
+        Object.keys(localStorage).forEach((k) => {
+          if (k.startsWith("rapot_asas_v3|")) localStorage.removeItem(k);
+        });
+        renderBatchKelas();
+        resetNilai();
+        alert("Semua data nilai tersimpan sudah dihapus.");
+      }
+
+      function pilihanUnduh() {
+        return [...document.querySelectorAll("#batchKelas input:checked")].map(
+          (i) => i.value,
+        );
+      }
+      function namaSheetAman(nama) {
+        return nama.replace(/[\\/?*\[\]:]/g, "-").substring(0, 31);
+      }
+      function base64ToArrayBuffer(dataUrl) {
+        const base64 = dataUrl.split(",")[1];
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        return bytes.buffer;
+      }
+
+      async function unduhExcel() {
+        const korektor = $("korektor").value;
+        const selected = pilihanUnduh();
+        if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+        if (selected.length === 0)
+          return alert("Centang minimal 1 data yang ingin diunduh.");
+        if (typeof ExcelJS === "undefined" || typeof saveAs === "undefined")
+          return alert(
+            "Library Excel belum termuat. Pastikan perangkat terhubung internet, lalu coba lagi.",
+          );
+
+        const wb = new ExcelJS.Workbook();
+        wb.creator = "Aplikasi Nilai ASAS SMP Islam Nailul Falaah";
+        wb.created = new Date();
+
+        const kepalaSignatureSrc = getKepalaTandaTangan();
+        const korektorSignatureSrc = getKorektorTandaTangan(korektor);
+        const kepalaSignatureId = wb.addImage({
+          buffer: base64ToArrayBuffer(kepalaSignatureSrc),
+          extension: "png",
+        });
+        const korektorSignatureId = korektorSignatureSrc
+          ? wb.addImage({
+              buffer: base64ToArrayBuffer(korektorSignatureSrc),
+              extension: "png",
+            })
+          : null;
+
+        selected.forEach((val) => {
+          const [mapel, kelas] = val.split("|");
+          const guru = pengampu(mapel, kelas);
+          const data = dataKelasUntukCetak(kelas, mapel, korektor);
+          const ws = wb.addWorksheet(namaSheetAman(`${kelas} ${mapel}`), {
+            pageSetup: {
+              paperSize: 9,
+              orientation: "portrait",
+              fitToPage: true,
+              fitToWidth: 1,
+              fitToHeight: 0,
+              margins: {
+                left: 0.55,
+                right: 0.25,
+                top: 0.35,
+                bottom: 0.35,
+                header: 0.2,
+                footer: 0.2,
+              },
+            },
+          });
+
+          ws.columns = [
+            { width: 7 },
+            { width: 42 },
+            { width: 15 },
+            { width: 18 },
+            { width: 16 },
+            { width: 12 },
+            { width: 12 },
+          ];
+
+          ws.mergeCells("A1:E1");
+          ws.getCell("A1").value =
+            "Nilai Asli Asesmen Sumatif Akhir Semester Genap";
+          ws.mergeCells("A2:E2");
+          ws.getCell("A2").value = "SMP Islam Nailul Falaah Tahun 2025/2026";
+          [
+            ["A4:B4", "C4:E4", "Korektor", korektor],
+            ["A5:B5", "C5:E5", "Kelas", kelas],
+            ["A6:B6", "C6:E6", "Mata Pelajaran", mapel],
+            ["A7:B7", "C7:E7", "Guru Pengampu Mapel", guru],
+          ].forEach(([m1, m2, l, v], idx) => {
+            ws.mergeCells(m1);
+            ws.mergeCells(m2);
+            ws.getCell(`A${4 + idx}`).value = l;
+            ws.getCell(`C${4 + idx}`).value = v;
+          });
+          ws.addRow([]); // row 8
+          ws.getRow(9).values = [
+            "No",
+            "Nama Peserta Didik",
+            "Skor Umum",
+            "Skor Cek\nPremis",
+            "Nilai Akhir",
+          ];
+          data.forEach((r, i) =>
+            ws.addRow([
+              i + 1,
+              r.nama,
+              r.umum ?? "",
+              r.premis ?? "",
+              r.akhir ?? "0",
+            ]),
+          );
+
+          const signBlankRow = 10 + data.length;
+          const signDateRow = signBlankRow + 1;
+          const signTitleRow = signBlankRow + 2;
+          const signNameRow = signBlankRow + 8;
+          while (ws.rowCount < signNameRow) ws.addRow([]);
+          ws.mergeCells(`D${signDateRow}:G${signDateRow}`);
+          ws.getCell(`D${signDateRow}`).value = tanggalCetak();
+          ws.mergeCells(`A${signTitleRow}:B${signTitleRow}`);
+          ws.getCell(`A${signTitleRow}`).value = DATA.kepalaJabatan;
+          ws.mergeCells(`D${signTitleRow}:G${signTitleRow}`);
+          ws.getCell(`D${signTitleRow}`).value = "Korektor";
+          ws.mergeCells(`A${signNameRow}:B${signNameRow}`);
+          ws.getCell(`A${signNameRow}`).value = DATA.kepalaNama;
+          ws.mergeCells(`D${signNameRow}:G${signNameRow}`);
+          ws.getCell(`D${signNameRow}`).value = korektor;
+
+          ws.addImage(kepalaSignatureId, {
+            tl: { col: 0.05, row: signTitleRow + 0.1 },
+            ext: { width: 220, height: 92 },
+            editAs: "oneCell",
+          });
+          if (korektorSignatureId !== null) {
+            ws.addImage(korektorSignatureId, {
+              tl: { col: 3.05, row: signTitleRow + 0.1 },
+              ext: { width: 220, height: 92 },
+              editAs: "oneCell",
+            });
+          }
+
+          for (let r = 1; r <= Math.max(ws.rowCount, 54); r++) {
+            const row = ws.getRow(r);
+            if (r <= 2) row.height = 24;
+            else if (r === 8) row.height = 17;
+            else if (r >= 4 && r <= 7) row.height = 22;
+            else if (r === 9) row.height = 31;
+            else if (r > 9 && r < signBlankRow) row.height = 21;
+            else if (r > signTitleRow && r < signNameRow) row.height = 25;
+            else row.height = 21;
+          }
+
+          ws.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+            row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+              cell.font = {
+                name: rowNumber <= 2 ? "Times New Roman" : "Arial",
+                size: rowNumber <= 2 ? 16 : 12,
+                bold: rowNumber <= 2,
+              };
+              cell.alignment = {
+                vertical: "middle",
+                horizontal: rowNumber <= 2 ? "center" : "left",
+                wrapText: true,
+              };
+            });
+          });
+
+          for (let r = 4; r <= 7; r++)
+            ws.getCell(`A${r}`).font = { name: "Arial", size: 12, bold: true };
+          ["A9", "B9", "C9", "D9", "E9"].forEach((addr) => {
+            const c = ws.getCell(addr);
+            c.font = {
+              name: "Arial",
+              size: 12,
+              bold: true,
+              color: { argb: "FFFFFFFF" },
+            };
+            c.fill = {
+              type: "pattern",
+              pattern: "solid",
+              fgColor: { argb: "FF198754" },
+            };
+            c.alignment = {
+              horizontal: "center",
+              vertical: "middle",
+              wrapText: true,
+            };
+          });
+          const border = {
+            top: { style: "thin" },
+            left: { style: "thin" },
+            bottom: { style: "thin" },
+            right: { style: "thin" },
+          };
+          for (let r = 9; r < signBlankRow; r++) {
+            for (let c = 1; c <= 5; c++) {
+              const cell = ws.getRow(r).getCell(c);
+              cell.border = border;
+              cell.alignment = {
+                horizontal: c === 2 ? "left" : "center",
+                vertical: "middle",
+                wrapText: true,
+              };
+            }
+          }
+          [
+            ws.getCell(`A${signNameRow}`),
+            ws.getCell(`D${signNameRow}`),
+          ].forEach((c) => {
+            c.font = { name: "Arial", size: 12, bold: true, underline: true };
+          });
+        });
+
+        const buffer = await wb.xlsx.writeBuffer();
+        const fileName = `Rekap_Nilai_${korektor}.xlsx`.replace(
+          /[\\/:*?"<>|]/g,
+          "_",
+        );
+        saveAs(
+          new Blob([buffer], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          }),
+          fileName,
+        );
+        $("downloadModal").classList.remove("show");
+      }
+
+      function unduhPDF() {
+        const korektor = $("korektor").value;
+        const selected = pilihanUnduh();
+        if (!korektor) return alert("Pilih korektor terlebih dahulu.");
+        if (selected.length === 0)
+          return alert("Centang minimal 1 data yang ingin diunduh.");
+
+        const printArea = $("printArea");
+        printArea.innerHTML = selected
+          .map((val) => {
+            const split = val.split("|");
+            return pageHTML(split[1], split[0], korektor);
+          })
+          .join("");
+
+        $("downloadModal").classList.remove("show");
+
+        const opt = {
+          margin: 0,
+          filename: `Rekap_Nilai_${korektor}.pdf`,
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false, scrollY: 0 },
+          jsPDF: { unit: "mm", format: [215, 330], orientation: "portrait" },
+          pagebreak: { mode: ["css", "legacy"] },
+        };
+
+        printArea.style.display = "block";
+        html2pdf()
+          .set(opt)
+          .from(printArea)
+          .save()
+          .then(() => {
+            printArea.style.display = "none";
+            printArea.innerHTML = "";
+          });
+      }
+      init();
+    </script>
+  </body>
+</html>
