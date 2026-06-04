@@ -180,7 +180,12 @@
 <button class="red" onclick="resetNilai()">Reset Nilai</button>
 </div>
 <p class="hint">
-<b>Catatan:</b> Skor Umum harus bilangan cacah. Skor Cek Premis boleh desimal. Tombol Simpan Data menyimpan nilai sementara di browser. Tombol KIRIM DATA akan mengirim nilai ke DATABASE dan halaman rekap nilai. Tanda tangan Kepala Sekolah otomatis masuk ke PDF dan Excel. Korektor bisa membuat tanda tangan langsung di aplikasi.</p>
+  <b>Catatan:</b><br>
+  Simpan data = menyimpan nilai sementara di browser<br>
+  Kirim Data = mengirim nilai ke Database dan halaman Rekap Nilai<br>
+  Reset Nilai = hapus semua nilai di browser<br>
+  Tanda tangan wajib diisi
+</p>
 <div id="ttdStatus" class="hint ttd-status-box">
 </div>
 </section>
@@ -235,17 +240,14 @@
 <div class="modal" onclick="event.stopPropagation()">
 <div class="modal-header">
 <h3>Buat Tanda Tangan Korektor</h3>
-<button class="modal-close" onclick="closeSignaturePopup()">Tutup</button>
 </div>
 <div class="modal-body">
 <canvas id="signatureCanvas" class="signature-pad">
 </canvas>
-<p class="signature-pad-help">Coret tanda tangan langsung pada kotak putih, atau klik Unggah Gambar untuk memakai file tanda tangan dari perangkat.</p>
+<p class="signature-pad-help">Coret tanda tangan langsung pada kotak putih.</p>
 <div class="modal-actions">
 <button class="gray" onclick="clearSignaturePad()">Clear</button>
 <button class="green" onclick="saveSignaturePad()">Save</button>
-<button class="gray" onclick="triggerSignatureImageUpload()">Unggah Gambar</button>
-<input id="signatureImageInput" type="file" accept="image/*" style="display:none" onchange="uploadSignatureImage(event)">
 </div>
 </div>
 </div>
@@ -655,30 +657,6 @@ function openSignaturePopup() {
 function closeSignaturePopup(e) {
   if(e && e.target.id !== "signatureModal") return;
   $("signatureModal").classList.remove("show");
-}
-function triggerSignatureImageUpload() {
-  const korektor = $("korektor").value;
-  if (!korektor) return alert("Pilih korektor terlebih dahulu.");
-  const input = $("signatureImageInput");
-  if (input) input.click();
-}
-function uploadSignatureImage(event) {
-  const korektor = $("korektor").value;
-  const file = event.target.files && event.target.files[0];
-  if (!korektor) return alert("Pilih korektor terlebih dahulu.");
-  if (!file) return;
-  if (!file.type.startsWith("image/")) return alert("File harus berupa gambar.");
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    localStorage.setItem(korektorSignatureKey(korektor), e.target.result);
-    signatureHasInk = false;
-    updateTtdStatus();
-    updateScreenSignatures();
-    closeSignaturePopup();
-    alert("Gambar tanda tangan korektor berhasil diunggah dan disimpan.");
-    event.target.value = "";
-  };
-  reader.readAsDataURL(file);
 }
 function clearSignaturePad(showAlert = true) {
   const canvas = $("signatureCanvas");
