@@ -17,7 +17,7 @@ label{display:block;font-weight:bold;margin-bottom:6px;color:#2e1065}
 select,input{width:100%;padding:10px 11px;border:1.5px solid #a78bfa;border-radius:10px;font-size:14px;background:#fff;outline:none}
 button{border:0;border-radius:11px;padding:10px 15px;font-weight:bold;cursor:pointer;font-size:14px;transition:.15s ease}
 button:hover{transform:translateY(-1px);filter:brightness(.98)}
-.purple{background:#7c3aed;color:white}.green{background:#16a34a;color:white}.blue{background:#2563eb;color:white}.gray{background:#e9e5ff;color:#2e1065}.red{background:#dc2626;color:white}
+.purple{background:#7c3aed;color:white}.green{background:#16a34a;color:white}.blue{background:#2563eb;color:white}.gray{background:#e9e5ff;color:#2e1065}.red{background:#dc2626;color:white}.yellow{background:#facc15;color:#000000}.completion-badge{display:inline-flex;align-items:center;border-radius:999px;padding:8px 12px;background:#fff7cc;color:#3f3106;font-weight:bold;font-size:13px;border:1px solid #e6c84f}
 .hint{margin-top:10px;font-size:13px;line-height:1.5;color:#5b506e}
 .layout{display:grid;grid-template-columns:280px 1fr;gap:14px;align-items:start}
 .filter-panel{position:sticky;top:14px}
@@ -59,18 +59,17 @@ td.center{text-align:center}td.name{text-align:left}
 <div><label>Kelas</label><select id="kelas"></select></div>
 </div>
 <div class="actions">
-<button class="purple" onclick="tampilkanRekap()">Tampilkan Rekap</button>
-<button class="gray" onclick="muatUlangData()">Muat Ulang</button>
+<button class="yellow" onclick="tampilkanRekap()">Tampilkan Nilai</button>
+<span id="kelengkapan" class="completion-badge">Pilih mapel dan kelas</span>
 </div>
 <div class="actions">
 <button class="green" onclick="unduhPDF()">Unduh PDF</button>
 <button class="blue" onclick="unduhExcel()">Unduh Excel</button>
 </div>
-<p class="hint">Korektor tidak perlu difilter. Nama korektor otomatis muncul per siswa di kolom sebelah kanan Nilai Akhir.</p>
 <div id="status" class="hint"></div>
 </section>
 <section class="preview">
-<div id="rekapArea"><div class="empty">Pilih jenjang, mapel, dan kelas, lalu klik <b>Tampilkan Rekap</b>.</div></div>
+<div id="rekapArea"><div class="empty">Pilih jenjang, mapel, dan kelas, lalu klik <b>Tampilkan Nilai</b>.</div></div>
 </section>
 </div>
 </div>
@@ -622,8 +621,8 @@ let rekapTerakhir = [];
 function $(id){return document.getElementById(id)}
 function isiSelect(el, values, ph){el.innerHTML=`<option value="">${ph}</option>`;values.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;el.appendChild(o)})}
 function dataJenjang(j){return j==='SMA'?SMA_DATA:SMP_DATA}
-function init(){isiSelect($('jenjang'), ['SMP','SMA'], '-- Pilih Jenjang --');$('status').innerHTML='Siap menampilkan rekap. Pastikan URL Apps Script rekap sudah dipasang.';}
-function onJenjangChange(){const d=dataJenjang($('jenjang').value);isiSelect($('mapel'), d.mapel||[], '-- Pilih Mapel --');isiSelect($('kelas'), d.kelas||[], '-- Pilih Kelas --');}
+function init(){isiSelect($('jenjang'), ['SMP','SMA'], '-- Pilih Jenjang --');$('status').innerHTML='';['mapel','kelas'].forEach(id=>$(id).addEventListener('change',updateKelengkapan));updateKelengkapan();}
+function onJenjangChange(){const d=dataJenjang($('jenjang').value);isiSelect($('mapel'), d.mapel||[], '-- Pilih Mapel --');isiSelect($('kelas'), d.kelas||[], '-- Pilih Kelas --');updateKelengkapan();}
 function normKey(s){return String(s||'').toLowerCase().replace(/[\s_\-]/g,'').replace(/[^a-z0-9]/g,'')}
 function pick(obj, keys){const map={};Object.keys(obj||{}).forEach(k=>map[normKey(k)]=obj[k]);for(const k of keys){const v=map[normKey(k)];if(v!==undefined&&v!==null)return v}return ''}
 function normalisasiRow(r){return {
@@ -639,10 +638,44 @@ function normalisasiRow(r){return {
   korektor: String(pick(r,['korektor','korektorASAS','korektor_asas'])).trim(),
   guruPengampu: String(pick(r,['guruPengampu','guru_pengampu','guru pengampu mapel','pengampu'])).trim()
 }}
+
+function jumlahSiswaSeharusnya(jenjang, kelas){
+  const data = dataJenjang(jenjang);
+  return (data.siswa && data.siswa[kelas]) ? data.siswa[kelas].length : 0;
+}
+function dataTerisiUntukFilter(jenjang, mapel, kelas){
+  if(!jenjang || !mapel || !kelas || !semuaData.length) return 0;
+  const filtered = semuaData.filter(r =>
+    r.jenjang === jenjang &&
+    r.mapel === mapel &&
+    r.kelas === kelas &&
+    String(r.nilaiAkhir ?? '').trim() !== ''
+  );
+  const latest = {};
+  filtered.forEach(r => {
+    const k = normKey(r.namaSiswa) || String(r.no || '');
+    if(k) latest[k] = r;
+  });
+  return Object.keys(latest).length;
+}
+function updateKelengkapan(jenjangParam, mapelParam, kelasParam, terisiParam){
+  const el = $('kelengkapan');
+  if(!el) return;
+  const jenjang = jenjangParam ?? $('jenjang').value;
+  const mapel = mapelParam ?? $('mapel').value;
+  const kelas = kelasParam ?? $('kelas').value;
+  if(!mapel || !kelas){
+    el.textContent = 'Pilih mapel dan kelas';
+    return;
+  }
+  const jumlah = jumlahSiswaSeharusnya(jenjang, kelas);
+  const terisi = terisiParam ?? dataTerisiUntukFilter(jenjang, mapel, kelas);
+  el.textContent = `${mapel} - ${kelas} ${terisi}/${jumlah}`;
+}
 async function muatUlangData(){
   if(!REKAP_API_URL || REKAP_API_URL.includes('PASTE_URL')){$('status').innerHTML='<b>Belum tersambung.</b> Deploy apps-script-rekap.gs dulu, lalu masukkan URL Web App ke REKAP_API_URL.';return;}
   $('status').textContent='Mengambil data dari spreadsheet...';
-  try{const res=await fetch(REKAP_API_URL+'?action=getRekap&spreadsheetId='+encodeURIComponent(SPREADSHEET_ID));const json=await res.json();semuaData=(json.data||json||[]).map(normalisasiRow);$('status').innerHTML=`<span class="status">${semuaData.length} baris data terbaca</span>`;}
+  try{const res=await fetch(REKAP_API_URL+'?action=getRekap&spreadsheetId='+encodeURIComponent(SPREADSHEET_ID));const json=await res.json();semuaData=(json.data||json||[]).map(normalisasiRow);$('status').innerHTML=`<span class="status">${semuaData.length} baris data terbaca</span>`;updateKelengkapan();}
   catch(err){console.error(err);$('status').innerHTML='Gagal membaca data. Cek URL Apps Script dan akses deployment.';}
 }
 function urutNomor(a,b){const na=Number(a.no), nb=Number(b.no); if(!isNaN(na)&&!isNaN(nb)) return na-nb; return String(a.namaSiswa).localeCompare(String(b.namaSiswa),'id');}
@@ -655,6 +688,7 @@ async function tampilkanRekap(){
   filtered.forEach(r=>{const k=normKey(r.namaSiswa)||String(r.no);latest[k]=r;});
   const rows=Object.values(latest).sort(urutNomor);
   rekapTerakhir=rows;
+  updateKelengkapan(jenjang,mapel,kelas,rows.length);
   renderRekap(jenjang,mapel,kelas,rows);
 }
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
