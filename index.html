@@ -5,15 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aplikasi Input Nilai NAFA</title>
 <style>
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #fff8dc, #fffdf3);
-    color: #3f3106;
+    background: linear-gradient(135deg, #F6F8F5, #EEF4F0);
+    color: #2F4F46;
   }
 
   .portal {
@@ -27,60 +25,84 @@
   .card {
     width: min(680px, 94vw);
     text-align: center;
-    background: #ffffff;
-    border: 1px solid #f3dd8a;
-    border-radius: 24px;
-    padding: 36px 26px;
-    box-shadow: 0 14px 38px rgba(121, 85, 0, 0.13);
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #D8E3DC;
+    border-radius: 28px;
+    padding: 42px 30px 36px;
+    box-shadow: 0 18px 46px rgba(47, 79, 70, 0.12);
   }
 
   .badge {
-    display: inline-block;
-    background: #fff3b0;
-    color: #7c5b00;
-    border: 1px solid #ecd16a;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #E6F0EB;
+    color: #3F6B5F;
+    border: 1px solid #C9DCD3;
     border-radius: 999px;
-    padding: 7px 14px;
-    font-size: 13px;
+    padding: 9px 18px;
+    font-size: 14px;
     font-weight: bold;
-    margin-bottom: 14px;
+    margin-bottom: 20px;
   }
 
   h1 {
     margin: 0;
     font-family: "Times New Roman", serif;
-    font-size: clamp(30px, 5vw, 48px);
-    line-height: 1.15;
-    color: #4b3a05;
+    font-size: clamp(34px, 6vw, 54px);
+    line-height: 1.12;
+    color: #2F4F46;
+    letter-spacing: -0.5px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 20px auto 18px;
+    color: #7FA891;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: "";
+    width: 110px;
+    max-width: 26vw;
+    height: 2px;
+    background: #C9DCD3;
+    border-radius: 99px;
   }
 
   p {
-    margin: 14px auto 0;
-    max-width: 520px;
-    color: #6d5a23;
-    font-size: 15px;
-    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 560px;
+    color: #5B6F67;
+    font-size: 17px;
+    line-height: 1.7;
   }
 
   .buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin-top: 30px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 36px;
   }
 
-  a {
-    text-decoration: none;
-  }
+  a { text-decoration: none; }
 
   .btn {
-    display: block;
-    border-radius: 18px;
-    padding: 22px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    border-radius: 22px;
+    padding: 25px 18px;
     color: #ffffff;
-    font-size: 25px;
-    font-weight: bold;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+    font-size: clamp(28px, 6vw, 40px);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    box-shadow: 0 14px 28px rgba(47, 79, 70, 0.16);
     transition: 0.16s ease;
   }
 
@@ -89,51 +111,61 @@
     filter: brightness(0.98);
   }
 
-  .smp {
-    background: #198754;
+  .btn:active { transform: translateY(0); }
+
+  .btn-icon {
+    font-size: 28px;
+    line-height: 1;
   }
 
-  .sma {
-    background: #2563eb;
-  }
-
-  .rekap {
-    background: #7c3aed;
-  }
+  .smp { background: #5E8B7E; }
+  .sma { background: #3B82F6; }
+  .rekap { background: #8B5CF6; }
 
   .note {
-    margin-top: 22px;
-    font-size: 20px;
-    color: #7a6a34;
+    margin-top: 28px;
+    font-size: 26px;
+    color: #4F6B61;
+  }
+
+  @media (min-width: 760px) {
+    .buttons {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .btn {
+      min-height: 96px;
+      font-size: 27px;
+      flex-direction: column;
+      gap: 8px;
+    }
   }
 
   @media (max-width: 560px) {
-    .buttons {
-      grid-template-columns: 1fr;
-    }
-
-    .card {
-      padding: 30px 18px;
-    }
+    .portal { padding: 18px; }
+    .card { padding: 34px 20px 30px; }
+    p { font-size: 16px; }
+    .note { font-size: 24px; }
   }
 </style>
 </head>
 <body>
   <main class="portal">
     <section class="card">
-      <div class="badge">NAFA • Input Nilai</div>
-      <h1>Aplikasi Input Nilai NAFA</h1>
+      <div class="badge">🌿 NAFA • Input Nilai</div>
+      <h1>Aplikasi Input Nilai<br>NAFA</h1>
+      <div class="divider">📖</div>
       <p>Silakan pilih jenjang untuk input nilai, atau buka halaman rekap untuk melihat nilai yang sudah dikirim.</p>
 
       <div class="buttons">
         <a href="SMP Input Nilai Asas 2026.html">
-          <span class="btn smp">SMP</span>
+          <span class="btn smp"><span class="btn-icon">🏫</span>SMP</span>
         </a>
         <a href="SMA Input Nilai Asas 2026.html">
-          <span class="btn sma">SMA</span>
+          <span class="btn sma"><span class="btn-icon">🎓</span>SMA</span>
         </a>
         <a href="rekap-nilai.html">
-          <span class="btn rekap">LIHAT NILAI</span>
+          <span class="btn rekap"><span class="btn-icon">📋</span>REKAP NILAI</span>
         </a>
       </div>
 
