@@ -1204,12 +1204,14 @@
         <div>
           <div><b>Kepala Sekolah</b></div>
           <div>${DATA.kepalaJabatan}</div>
-          <div style="margin-top:26mm; font-weight:bold; text-decoration:underline; color:#142018;">${DATA.kepalaNama}</div>
+          ${imgKepalaTandaTanganHTML()}
+          <div style="font-weight:bold; text-decoration:underline; color:#142018;">${DATA.kepalaNama}</div>
         </div>
         <div>
           <div><b>${tanggalCetak()}</b></div>
           <div>Korektor</div>
-          <div style="margin-top:26mm; font-weight:bold; text-decoration:underline; color:#142018;">${korektor}</div>
+          ${imgKorektorTandaTanganHTML(korektor)}
+          <div style="font-weight:bold; text-decoration:underline; color:#142018;">${korektor}</div>
         </div>
       </div>
     </div>
