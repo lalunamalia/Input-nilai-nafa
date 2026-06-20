@@ -795,9 +795,9 @@ function saveSignaturePad(){
 function getBatasNilai(kelas){
   const k=String(kelas||'').trim();
   if(k.startsWith('7')) return {min:75,max:100};
-  if(k.startsWith('8')) return {min:76,max:100};
+  if(k.startsWith('8')) return {min:75,max:100};
   if(k.startsWith('10')) return {min:80,max:100};
-  if(k.startsWith('11')) return {min:81,max:100};
+  if(k.startsWith('11')) return {min:80,max:100};
   return {min:0,max:100};
 }
 function labelTingkatKelas(kelas){
